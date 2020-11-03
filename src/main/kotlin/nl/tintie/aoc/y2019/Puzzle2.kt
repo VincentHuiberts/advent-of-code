@@ -25,3 +25,7 @@ class Puzzle2 : AocPuzzle(2019, 2) {
         return "No cigar"
     }
 }
+
+fun main() {
+    Puzzle2().runBoth()
+}

@@ -38,3 +38,7 @@ class Puzzle3 : AocPuzzle(2019, 3) {
             .minOrNull()
     }
 }
+
+fun main() {
+    Puzzle3().runBoth()
+}
