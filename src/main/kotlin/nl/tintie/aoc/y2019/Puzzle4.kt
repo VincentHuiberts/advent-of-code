@@ -5,7 +5,7 @@ import nl.tintie.aoc.AocPuzzle
 class Puzzle4 : AocPuzzle(2019, 4) {
     private fun numberOk(number: Int, groupAssert: (List<String>) -> Boolean): Boolean {
         val chars = number.toString()
-            .split("").drop(1).take(6)
+            .chunked(1)
 
         val double = chars
             .groupBy { it }
@@ -37,5 +37,5 @@ class Puzzle4 : AocPuzzle(2019, 4) {
 }
 
 fun main() {
-    Puzzle4().runPart2()
+    Puzzle4().runBoth()
 }

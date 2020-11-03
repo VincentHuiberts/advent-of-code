@@ -4,16 +4,32 @@ data class Value(val value: Int, val position: Int)
 
 class StateMachine(
     initialProgram: List<Int>,
-    val input: Int? = null
+    initialInput: List<Int> = listOf()
 ) {
     val program = initialProgram.toMutableList()
+    val input = initialInput.toMutableList()
     var position = 0
+    var inputPosition = 0
     var output = mutableListOf<Int>()
+    var finished = false
 
     fun run() {
         while (program[position] != 99) {
-            processInstruction()
+            processNextInstruction()
         }
+        finished = true
+    }
+
+    fun runToNextOutput() {
+        val originalOutputSize = output.size
+        while (originalOutputSize == output.size && program[position] != 99) {
+            processNextInstruction()
+        }
+        if(program[position] == 99) finished = true
+    }
+
+    private fun getInput(): Int {
+        return input[inputPosition++]
     }
 
     private fun getNValues(n: Int, modes: List<String>) = (1..n).mapIndexed { i, offset ->
@@ -24,7 +40,7 @@ class StateMachine(
         Value(program[position], position)
     }
 
-    private fun processInstruction() {
+    private fun processNextInstruction() {
         val (instruction, modes) =
             program[position].toString().reversed().let { it.take(2).reversed().toInt() to it.drop(2).chunked(1) }
         when (instruction) {
@@ -40,7 +56,7 @@ class StateMachine(
             }
             3 -> {
                 val (p1) = getNValues(1, modes)
-                program[p1.position] = input!!
+                program[p1.position] = getInput()
                 position += 2
             }
             4 -> {
