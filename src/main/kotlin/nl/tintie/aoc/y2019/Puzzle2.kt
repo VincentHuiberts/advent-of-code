@@ -7,7 +7,7 @@ class Puzzle2 : AocPuzzle(2019, 2) {
         val machine = StateMachine(intArrayInput)
         machine.program[1] = 12
         machine.program[2] = 2
-        machine.run()
+        machine.runTillFinished()
         return machine.program[0]
     }
 
@@ -18,7 +18,7 @@ class Puzzle2 : AocPuzzle(2019, 2) {
                 val machine = StateMachine(intArrayInput)
                 machine.program[1] = noun
                 machine.program[2] = verb
-                machine.run()
+                machine.runTillFinished()
                 if(machine.program[0] == desiredOutput) return 100 * noun + verb
             }
         }

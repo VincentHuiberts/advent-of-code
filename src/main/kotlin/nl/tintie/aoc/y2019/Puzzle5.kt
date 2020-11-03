@@ -5,13 +5,13 @@ import nl.tintie.aoc.AocPuzzle
 class Puzzle5: AocPuzzle(2019, 5) {
     override fun part1(): Any? {
         val machine = StateMachine(intArrayInput, listOf(1))
-        machine.run()
+        machine.runTillFinished()
         return machine.output
     }
 
     override fun part2(): Any? {
         val machine = StateMachine(intArrayInput, listOf(5))
-        machine.run()
+        machine.runTillFinished()
         return machine.output
     }
 }

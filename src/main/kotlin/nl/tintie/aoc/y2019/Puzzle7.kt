@@ -9,11 +9,13 @@ class Puzzle7 : AocPuzzle(2019, 7) {
                 StateMachine(intArrayInput, listOf(it))
             }
 
+            machines.first().input.add(0)
+
             machines.windowed(2).forEach { (first, second) ->
-                first.run()
+                first.runTillFinished()
                 second.input.add(first.output.last())
             }
-            machines.last().also { it.run() }.output.last()
+            machines.last().also { it.runTillFinished() }.output.last()
         }.maxOrNull()
     }
 
@@ -36,10 +38,10 @@ class Puzzle7 : AocPuzzle(2019, 7) {
         }
 
         machines.windowed(2).forEach { (first, second) ->
-            first.run()
+            first.runTillFinished()
             second.input.add(first.output.last())
         }
-        return machines.last().also { it.run() }.output.last()
+        return machines.last().also { it.runTillFinished() }.output.last()
     }
 
     override fun part2(): Any? {
@@ -66,5 +68,5 @@ class Puzzle7 : AocPuzzle(2019, 7) {
 }
 
 fun main() {
-    Puzzle7().runPart2()
+    Puzzle7().runBoth()
 }

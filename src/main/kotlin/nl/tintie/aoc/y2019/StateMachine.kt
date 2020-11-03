@@ -7,13 +7,15 @@ class StateMachine(
     initialInput: List<Int> = listOf()
 ) {
     val program = initialProgram.toMutableList()
-    val input = initialInput.toMutableList()
     var position = 0
+
+    val input = initialInput.toMutableList()
     var inputPosition = 0
+
     var output = mutableListOf<Int>()
     var finished = false
 
-    fun run() {
+    fun runTillFinished() {
         while (program[position] != 99) {
             processNextInstruction()
         }
