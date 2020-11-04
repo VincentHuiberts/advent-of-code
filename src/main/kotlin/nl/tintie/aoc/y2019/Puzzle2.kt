@@ -12,9 +12,9 @@ class Puzzle2 : AocPuzzle(2019, 2) {
     }
 
     override fun part2(): Any {
-        val desiredOutput = 19690720
-        (0..100).forEach{noun ->
-            (0..100).forEach { verb ->
+        val desiredOutput = 19690720L
+        (0..100L).forEach{noun ->
+            (0..100L).forEach { verb ->
                 val machine = StateMachine(intArrayInput)
                 machine.program[1] = noun
                 machine.program[2] = verb

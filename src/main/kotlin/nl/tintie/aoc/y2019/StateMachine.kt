@@ -1,22 +1,24 @@
 package nl.tintie.aoc.y2019
 
-data class Value(val value: Int, val position: Int)
+data class Value(val value: Long, val position: Int)
 
 class StateMachine(
     initialProgram: List<Int>,
     initialInput: List<Int> = listOf()
 ) {
-    val program = initialProgram.toMutableList()
+    val program = initialProgram.map { it.toLong() }.toMutableList()
     var position = 0
 
-    val input = initialInput.toMutableList()
+    val input = initialInput.map { it.toLong() }.toMutableList()
     var inputPosition = 0
 
-    var output = mutableListOf<Int>()
+    var output = mutableListOf<Long>()
     var finished = false
 
+    var relativeBase = 0L
+
     fun runTillFinished() {
-        while (program[position] != 99) {
+        while (program[position] != 99L) {
             processNextInstruction()
         }
         finished = true
@@ -24,20 +26,25 @@ class StateMachine(
 
     fun runToNextOutput() {
         val originalOutputSize = output.size
-        while (originalOutputSize == output.size && program[position] != 99) {
+        while (originalOutputSize == output.size && program[position] != 99L) {
             processNextInstruction()
         }
-        if(program[position] == 99) finished = true
+        if(program[position] == 99L) finished = true
     }
 
-    private fun getInput(): Int {
-        return input[inputPosition++]
+    private fun getInput(): Long {
+        return input[inputPosition++].toLong()
     }
 
     private fun getNValues(n: Int, modes: List<String>) = (1..n).mapIndexed { i, offset ->
         val position = when (modes.getOrNull(i)) {
             "1" -> position + offset
+            "2" -> program[position + offset] + relativeBase
             else -> program[position + offset]
+        }.toInt()
+        if(position.toLong() > program.size - 1L) {
+            val diff = position.toLong() - program.size + 1L
+            repeat(diff.toInt()) { program.add(0) }
         }
         Value(program[position], position)
     }
@@ -68,12 +75,12 @@ class StateMachine(
             }
             5 -> {
                 val (p1, p2) = getNValues(2, modes)
-                if (p1.value != 0) position = p2.value
+                if (p1.value != 0L) position = p2.value.toInt()
                 else position += 3
             }
             6 -> {
                 val (p1, p2) = getNValues(2, modes)
-                if (p1.value == 0) position = p2.value
+                if (p1.value == 0L) position = p2.value.toInt()
                 else position += 3
             }
             7 -> {
@@ -85,6 +92,11 @@ class StateMachine(
                 val (p1, p2, p3) = getNValues(3, modes)
                 program[p3.position] = if (p1.value == p2.value) 1 else 0
                 position += 4
+            }
+            9 -> {
+                val (p1) = getNValues(1, modes)
+                relativeBase += p1.value
+                position += 2
             }
             else -> throw IllegalStateException("Unknown instruction ${program[position]}")
         }

@@ -32,18 +32,6 @@ class Puzzle7 : AocPuzzle(2019, 7) {
         return getRemainingCombinations(options)
     }
 
-    private fun runWithPhaseSetting(phaseSetting: List<Int>): Int {
-        val machines = phaseSetting.map {
-            StateMachine(intArrayInput, listOf(it))
-        }
-
-        machines.windowed(2).forEach { (first, second) ->
-            first.runTillFinished()
-            second.input.add(first.output.last())
-        }
-        return machines.last().also { it.runTillFinished() }.output.last()
-    }
-
     override fun part2(): Any? {
         return getAllPhaseSettingsOptions(listOf(5, 6, 7, 8, 9)).map { phaseSetting ->
             val machines = phaseSetting.map {
