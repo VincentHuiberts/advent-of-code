@@ -29,9 +29,9 @@ abstract class AocPuzzle(year: Int, day: Int) {
 
     val intArrayInput: List<Int> by lazy { input.single().split(",").map { it.toInt() } }
 
-    protected abstract fun part1(): Any?
+    abstract fun part1(): Any?
 
-    protected open fun part2(): Any? =
+    open fun part2(): Any? =
         "Not yet implemented"
 
     @OptIn(ExperimentalTime::class)
