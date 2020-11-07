@@ -27,7 +27,7 @@ abstract class AocPuzzle(year: Int, day: Int) {
         localInputFile.takeIf { it.exists() }?.readLines() ?: fetchRemoteInput()
     }
 
-    val intArrayInput: List<Int> by lazy { input.single().split(",").map { it.toInt() } }
+    val intArrayInput: List<Long> by lazy { input.single().split(",").map { it.toLong() } }
 
     abstract fun part1(): Any?
 

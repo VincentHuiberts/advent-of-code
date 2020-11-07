@@ -6,7 +6,7 @@ class Puzzle7 : AocPuzzle(2019, 7) {
     override fun part1(): Any? {
         return getAllPhaseSettingsOptions(listOf(0, 1, 2, 3, 4)).map { phaseSetting ->
             val machines = phaseSetting.map {
-                StateMachine(intArrayInput, listOf(it))
+                IntComputer(intArrayInput, listOf(it))
             }
 
             machines.first().input.add(0)
@@ -35,7 +35,7 @@ class Puzzle7 : AocPuzzle(2019, 7) {
     override fun part2(): Any? {
         return getAllPhaseSettingsOptions(listOf(5, 6, 7, 8, 9)).map { phaseSetting ->
             val machines = phaseSetting.map {
-                StateMachine(intArrayInput, listOf(it))
+                IntComputer(intArrayInput, listOf(it))
             }
 
             machines.first().input.add(0)

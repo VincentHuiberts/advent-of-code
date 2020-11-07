@@ -5,14 +5,14 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 
-data class Point(
-    val char: String,
-    val x: Int,
-    val y: Int,
-    val angle: Double? = null
-)
-
 class Puzzle10 : AocPuzzle(2019, 10) {
+    data class Point(
+        val char: String,
+        val x: Int,
+        val y: Int,
+        val angle: Double? = null
+    )
+
     val points = input.flatMapIndexed { y, row ->
         row.chunked(1).mapIndexed { x, char -> Point(char, x, y) }
     }

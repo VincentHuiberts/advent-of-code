@@ -2,8 +2,8 @@ package nl.tintie.aoc.y2019
 
 data class Value(val value: Long, val position: Int)
 
-class StateMachine(
-    initialProgram: List<Int>,
+class IntComputer   (
+    initialProgram: List<Long>,
     initialInput: List<Int> = listOf()
 ) {
     val program = initialProgram.map { it.toLong() }.toMutableList()
@@ -24,12 +24,13 @@ class StateMachine(
         finished = true
     }
 
-    fun runToNextOutput() {
+    fun runToNextOutput(): Long {
         val originalOutputSize = output.size
         while (originalOutputSize == output.size && program[position] != 99L) {
             processNextInstruction()
         }
         if(program[position] == 99L) finished = true
+        return output.last()
     }
 
     private fun getInput(): Long {
