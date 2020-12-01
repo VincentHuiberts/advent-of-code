@@ -44,7 +44,7 @@ class Puzzle14 : AocPuzzle(2019, 14) {
     override fun part1(): Any? {
 //        val reactions = input.map(::mapToReaction)
         var cost = reactions.single { it.output.type == "FUEL" }.input
-        val stockpile = mutableListOf<Ingredient>()
+//        val stockpile = mutableListOf<Ingredient>()
         while (!cost.all { it.type == "ORE" }) {
             val (ore, other) = cost.partition { it.type == "ORE" }
             val groupedIngredients = other.groupBy { it.type }.values.map { Ingredient(it.first().type, it.sumBy { it.amount }) }

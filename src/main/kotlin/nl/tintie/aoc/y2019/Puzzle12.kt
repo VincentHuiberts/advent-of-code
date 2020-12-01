@@ -34,7 +34,7 @@ class Puzzle12 : AocPuzzle(2019, 12) {
             Moon(x, y, z)
         }
 
-        val updatedMoons = (1..1000).fold(start) { prevState, step ->
+        val updatedMoons = (1..1000).fold(start) { prevState, _ ->
             prevState.map { prevMoon ->
                 prevState.updatedMoonState(prevMoon)
             }

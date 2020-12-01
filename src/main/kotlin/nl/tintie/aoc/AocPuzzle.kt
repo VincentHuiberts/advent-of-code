@@ -2,29 +2,54 @@ package nl.tintie.aoc
 
 import com.github.kittinunf.fuel.httpGet
 import java.io.File
+import java.util.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
-abstract class AocPuzzle(year: Int, day: Int) {
-    val remoteInputUrl = "$BASE_URL/$year/day/$day/input"
-    val localInputFile = File("$localInputDir/$year/$day.txt")
+abstract class AocPuzzle(val year: Int, val day: Int) {
+    val remotePuzzlePageUrl = "$BASE_URL/$year/day/$day"
+    val remoteInputUrl = "$remotePuzzlePageUrl/input"
+    val localPuzzlePageFile = File("$localCacheDir/$year/$day/puzzle.html")
+    val localInputFile = File("$localCacheDir/$year/$day/input.txt")
 
-    fun fetchRemoteInput(): List<String> {
-        localInputFile.parentFile.mkdirs()
-        val (_, response, result) = remoteInputUrl.httpGet()
-            .header(
-                "cookie",
-                "session=${System.getenv("SESSION")}"
-            )
-            .response()
+    val properties: Properties = Properties().apply { load(File("settings.properties").inputStream()) }
 
-        response.body().writeTo(localInputFile.outputStream())
-
+    fun fetchInput(): List<String> {
+        downloadRemoteFile(remoteInputUrl, localInputFile)
         return localInputFile.readLines()
     }
 
+    fun fetchPuzzlePage(): String {
+        downloadRemoteFile(remotePuzzlePageUrl, localPuzzlePageFile)
+        return localPuzzlePageFile.readText()
+    }
+
+    private fun downloadRemoteFile(url: String, outputFile: File) {
+        outputFile.parentFile.mkdirs()
+        val (_, response, _) = url.httpGet()
+            .header(
+                "cookie",
+                "session=${properties.getProperty("session")}"
+            )
+            .response()
+
+        response.body().writeTo(outputFile.outputStream())
+    }
+
     val input: List<String> by lazy {
-        localInputFile.takeIf { it.exists() }?.readLines() ?: fetchRemoteInput()
+        localInputFile.takeIf { it.exists() }?.readLines() ?: fetchInput()
+    }
+
+    val puzzleFile: String by lazy {
+        localPuzzlePageFile.takeIf { it.exists() }?.readText() ?: fetchPuzzlePage()
+    }
+
+    val part1Answer: String? by lazy {
+        answerPattern.findAll(puzzleFile).firstOrNull()?.groupValues?.get(1)
+    }
+
+    val part2Answer: String? by lazy {
+        answerPattern.findAll(puzzleFile).drop(1).firstOrNull()?.groupValues?.get(1)
     }
 
     val intArrayInput: List<Long> by lazy { input.single().split(",").map { it.toLong() } }
@@ -50,8 +75,17 @@ abstract class AocPuzzle(year: Int, day: Int) {
         runPart2()
     }
 
+    private fun assertAnswer(name: String, expected: String?, actual: Any?) =
+        assert(expected.toString() == actual.toString()) {
+            "Expected $expected for $name, but was $actual"
+        }
+
+    fun validatePart1() = assertAnswer("Part1", part1Answer, part1())
+    fun validatePart2() = assertAnswer("Part2", part2Answer, part2())
+
     companion object {
         const val BASE_URL = "https://adventofcode.com"
-        const val localInputDir = "input"
+        const val localCacheDir = "cache"
+        val answerPattern = """<p>Your puzzle answer was <code>(.*?)<\/code>\.""".toRegex()
     }
 }
