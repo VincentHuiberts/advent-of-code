@@ -1,7 +1,7 @@
 package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
-import nl.tintie.aoc.combinationsFiltered
+import nl.tintie.aoc.combinations
 
 class Puzzle1 : AocPuzzle(2020, 1) {
     val intInput = input.map { it.toInt() }.asSequence()
@@ -10,11 +10,11 @@ class Puzzle1 : AocPuzzle(2020, 1) {
         nums.sum() == 2020
     }!!.reduce(Int::times)
 
-    override fun part1() = intInput.combinationsFiltered(2, listOf({it < 1010}, {it >= 1010})).findAndMultiply()
+    override fun part1() = intInput.combinations(2).findAndMultiply()
 
-    override fun part2() = intInput.combinationsFiltered(3, listOf({it <= 1010}, {it < 1010})).findAndMultiply()
+    override fun part2() = intInput.combinations(3).findAndMultiply()
 }
 
 fun main() {
-    Puzzle1().runBoth()
+    Puzzle1().runPart2()
 }

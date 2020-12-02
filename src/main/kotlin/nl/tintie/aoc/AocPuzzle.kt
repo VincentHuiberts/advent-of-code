@@ -42,11 +42,15 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
     }
 
     open val part1Answer: String? by lazy {
-        answerPattern.findAll(puzzleFile).firstOrNull()?.groupValues?.get(1)
+        answerPattern.findAll(puzzleFile).firstOrNull()?.groupValues?.get(1).also {
+            if (it == null) localPuzzlePageFile.delete() // Answer not yet part of the page
+        }
     }
 
     open val part2Answer: String? by lazy {
-        answerPattern.findAll(puzzleFile).drop(1).firstOrNull()?.groupValues?.get(1)
+        answerPattern.findAll(puzzleFile).drop(1).firstOrNull()?.groupValues?.get(1).also {
+            if (it == null) localPuzzlePageFile.delete() // Answer not yet part of the page
+        }
     }
 
     val intArrayInput: List<Long> by lazy { input.single().split(",").map { it.toLong() } }
