@@ -27,10 +27,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
     private fun downloadRemoteFile(url: String, outputFile: File) {
         outputFile.parentFile.mkdirs()
         val (_, response, _) = url.httpGet()
-            .header(
-                "cookie",
-                "session=${properties.getProperty("session")}"
-            )
+            .header("cookie", "session=${properties.getProperty("session")}")
             .response()
 
         response.body().writeTo(outputFile.outputStream())

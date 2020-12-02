@@ -14,7 +14,6 @@ class Puzzle2 : AocPuzzle(2020, 2) {
         fun isValidPt1(): Boolean =
             value.chunked(1).count { it == char } in min..max
 
-
         fun isValidPt2(): Boolean {
             val a = value.chunked(1)[min - 1] == char
             val b = value.chunked(1)[max - 1] == char
