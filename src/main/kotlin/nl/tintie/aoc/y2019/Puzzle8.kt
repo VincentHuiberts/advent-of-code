@@ -33,6 +33,15 @@ class Puzzle8 : AocPuzzle(2019, 8) {
             }
         }.let { "\n$it" }
     }
+
+    override val part2Answer: String?
+        get() = """
+ 00  0  0 0000  00  000  
+0  0 0  0 0    0  0 0  0 
+0  0 0000 000  0    000  
+0000 0  0 0    0    0  0 
+0  0 0  0 0    0  0 0  0 
+0  0 0  0 0     00  000  """
 }
 
 fun main() {

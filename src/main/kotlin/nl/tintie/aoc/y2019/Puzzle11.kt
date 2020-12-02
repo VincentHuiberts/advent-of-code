@@ -80,6 +80,15 @@ class Puzzle11 : AocPuzzle(2019, 11) {
         }
         return "\n" + grid.reversed().joinToString("\n") { row -> row.joinToString("") }
     }
+
+    override val part2Answer: String?
+        get() = """
+  ##  ###  #  #  ##  #  # ###  #### #  #   
+ #  # #  # #  # #  # #  # #  # #    #  #   
+ #  # #  # #  # #    #  # #  # ###  ####   
+ #### ###  #  # # ## #  # ###  #    #  #   
+ #  # #    #  # #  # #  # # #  #    #  # # 
+ #  # #     ##   ###  ##  #  # #    #  #   """
 }
 
 fun main() {

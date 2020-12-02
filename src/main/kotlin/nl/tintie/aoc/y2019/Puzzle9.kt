@@ -7,14 +7,14 @@ class Puzzle9 : AocPuzzle(2019, 9) {
         val machine = IntComputer(intArrayInput)
         machine.input.add(1)
         machine.runTillFinished()
-        return machine.output
+        return machine.output.last()
     }
 
     override fun part2(): Any? {
         val machine = IntComputer(intArrayInput)
         machine.input.add(2)
         machine.runTillFinished()
-        return machine.output
+        return machine.output.last()
     }
 }
 

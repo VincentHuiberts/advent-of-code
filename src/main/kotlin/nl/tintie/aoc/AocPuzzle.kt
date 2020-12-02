@@ -44,11 +44,11 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
         localPuzzlePageFile.takeIf { it.exists() }?.readText() ?: fetchPuzzlePage()
     }
 
-    val part1Answer: String? by lazy {
+    open val part1Answer: String? by lazy {
         answerPattern.findAll(puzzleFile).firstOrNull()?.groupValues?.get(1)
     }
 
-    val part2Answer: String? by lazy {
+    open val part2Answer: String? by lazy {
         answerPattern.findAll(puzzleFile).drop(1).firstOrNull()?.groupValues?.get(1)
     }
 
@@ -77,7 +77,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
 
     private fun assertAnswer(name: String, expected: String?, actual: Any?) =
         assert(expected.toString() == actual.toString()) {
-            "Expected $expected for $name, but was $actual"
+            "Year $year Day $day $name Expected '$expected', but was '$actual'"
         }
 
     fun validatePart1() = assertAnswer("Part1", part1Answer, part1())

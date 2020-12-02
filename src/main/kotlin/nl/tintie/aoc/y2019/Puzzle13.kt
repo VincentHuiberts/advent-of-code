@@ -15,12 +15,15 @@ class Puzzle13 : AocPuzzle(2019, 13) {
     }.count { it.type == 2L }
 
     override fun part2(): Any? = IntComputer(intArrayInput).run {
+        var latestScore : Long? = null
         program[0] = 2
         val objects = mutableListOf<Tile>()
         var paddle: Tile? = null
         while(!finished) {
             val (x, y, type) = listOf(runToNextOutput(), runToNextOutput(), runToNextOutput())
-            if(x == -1L && y == 0L) println("Score = $type")
+            if(x == -1L && y == 0L) {
+                latestScore = type
+            }
             else objects += Tile(x, y, type)
             val ball = objects.find { it.type == 4L }
             objects.find { it.type == 3L }?.let {
@@ -36,6 +39,7 @@ class Puzzle13 : AocPuzzle(2019, 13) {
                 paddle = paddle!!.copy(x = paddle!!.x + input.last())
             }
         }
+        latestScore
     }
 
 
