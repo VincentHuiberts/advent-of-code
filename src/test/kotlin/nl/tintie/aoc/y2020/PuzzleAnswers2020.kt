@@ -8,7 +8,8 @@ class PuzzleAnswers2020 {
     fun `answer should match the correct one`() =
         listOf(
             Puzzle1(),
-            Puzzle2()
+            Puzzle2(),
+            Puzzle3()
         ).flatMap { puzzle ->
             listOf(
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 1") {
