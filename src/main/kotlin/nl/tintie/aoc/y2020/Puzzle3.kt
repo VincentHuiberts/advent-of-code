@@ -9,7 +9,9 @@ class Puzzle3 : AocPuzzle(2020, 3) {
         return rows.foldIndexed(0 to 0L) { i, (x, treesEncountered), row ->
             if (i % verticalSpeed == 0) {
                 val correctedX = x % row.size
-                (correctedX + horizontalSpeed) to if (row[correctedX] == "#") treesEncountered + 1 else treesEncountered
+                (correctedX + horizontalSpeed) to treesEncountered.let { trees ->
+                    if (row[correctedX] == "#") trees + 1 else trees
+                }
             } else {
                 x to treesEncountered
             }

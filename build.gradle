@@ -21,4 +21,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    systemProperties = [
+            'junit.jupiter.execution.parallel.enabled': 'true',
+            'junit.jupiter.execution.parallel.mode.default': 'concurrent'
+    ]
 }

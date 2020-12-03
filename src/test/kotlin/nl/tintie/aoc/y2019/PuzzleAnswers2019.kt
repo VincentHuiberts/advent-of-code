@@ -5,7 +5,7 @@ import org.junit.jupiter.api.TestFactory
 
 class PuzzleAnswers2019 {
     @TestFactory
-    fun `answer should match the correct one`() =
+    fun `answer should match the initially provided one`() =
         listOf(
             Puzzle1(),
             Puzzle2(),
