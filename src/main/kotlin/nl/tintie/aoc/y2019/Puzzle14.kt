@@ -1,25 +1,20 @@
 package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
-import java.lang.Math.ceil
+import kotlin.math.min
 
 class Puzzle14 : AocPuzzle(2019, 14) {
-    data class Ingredient (
+    data class Ingredient(
         val type: String,
-        val amount: Int
+        val amount: Long
     )
 
-    data class Reaction (
+    data class Reaction(
         val input: List<Ingredient>,
         val output: Ingredient
     )
 
-    val reactions = """10 ORE => 10 A
-1 ORE => 1 B
-7 A, 1 B => 1 C
-7 A, 1 C => 1 D
-7 A, 1 D => 1 E
-7 A, 1 E => 1 FUEL""".lines().map(::mapToReaction)
+    val reactions = input.map(::mapToReaction)
 
     fun mapToReaction(line: String): Reaction {
         val (input, output) = line.split("=>")
@@ -31,29 +26,73 @@ class Puzzle14 : AocPuzzle(2019, 14) {
 
     private fun mapToIngredient(ingredient: String): Ingredient {
         val (amount, type) = ingredient.trim().split(" ")
-        return Ingredient(type, amount.toInt())
+        return Ingredient(type, amount.toLong())
     }
 
-    fun getCost(ingredient: Ingredient): List<Ingredient> {
-        val nextReaction = reactions.single { it.output.type == ingredient.type }
-        var factor = ingredient.amount / nextReaction.output.amount
-        if (ingredient.amount % nextReaction.output.amount > 0) factor++
-        return nextReaction.input.map { it.copy(amount = it.amount * factor) }
+    private fun getReaction(type: String) = reactions.single { it.output.type == type }
+
+    fun getOreCost(ingredient: Ingredient): Long {
+        val stock = mutableMapOf<String, Long>()
+
+        fun addToStock(type: String, amount: Long) {
+            val current = stock.getOrPut(type) { 0 }
+            stock[type] = current + amount
+        }
+
+        fun takeFromStock(type: String, max: Long): Long {
+            val current = stock.getOrPut(type) { 0 }
+            val amount = min(current, max)
+            stock[type] = current - amount
+            return amount
+        }
+
+        fun _getOreCost(_ingredient: Ingredient): List<Ingredient> {
+            val nextReaction = getReaction(_ingredient.type)
+            val needed = _ingredient.amount - takeFromStock(_ingredient.type, _ingredient.amount)
+            var factor = takeIf { needed > 0 }?.let { needed / nextReaction.output.amount } ?: 0L
+            val stillNeeded = takeIf { needed > 0 }?.let { needed % nextReaction.output.amount } ?: 0L
+            if (stillNeeded > 0) {
+                factor++
+                addToStock(_ingredient.type, nextReaction.output.amount - stillNeeded)
+            }
+            return if (nextReaction.input.all { it.type == "ORE" }) {
+                nextReaction.input.map { it.copy(amount = it.amount * factor) }
+            } else {
+                nextReaction.input.map { it.copy(amount = it.amount * factor) }.flatMap { _getOreCost(it) }
+            }
+        }
+
+        return _getOreCost(ingredient).groupBy { it.type }.get("ORE")!!.fold(0L) { acc, curr -> acc + curr.amount }
     }
 
     override fun part1(): Any? {
-//        val reactions = input.map(::mapToReaction)
-        var cost = reactions.single { it.output.type == "FUEL" }.input
-//        val stockpile = mutableListOf<Ingredient>()
-        while (!cost.all { it.type == "ORE" }) {
-            val (ore, other) = cost.partition { it.type == "ORE" }
-            val groupedIngredients = other.groupBy { it.type }.values.map { Ingredient(it.first().type, it.sumBy { it.amount }) }
-            cost = ore + groupedIngredients.flatMap { getCost(it) }
+        return getOreCost(Ingredient("FUEL", 1))
+    }
+
+    override fun part2(): Any? {
+        val amountOfOre = 1_000_000_000_000
+        var currentFuel = amountOfOre / 2
+        var lowerFuel = 0L
+        var upperFuel = amountOfOre
+        while (true) {
+            val (lower, upper) = getOreCost(Ingredient("FUEL", currentFuel)) to
+                    getOreCost(Ingredient("FUEL", currentFuel + 1))
+            when {
+                amountOfOre in lower..upper -> {
+                    return currentFuel
+                }
+                lower > amountOfOre -> {
+                    upperFuel = currentFuel
+                }
+                else -> {
+                    lowerFuel = currentFuel
+                }
+            }
+            currentFuel = lowerFuel + ((upperFuel - lowerFuel) / 2)
         }
-        return cost.sumBy { it.amount }
     }
 }
 
 fun main() {
-    Puzzle14().runPart1()
+    Puzzle14().runBoth()
 }
