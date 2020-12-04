@@ -33,7 +33,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
         response.body().writeTo(outputFile.outputStream())
     }
 
-    val input: List<String> by lazy {
+    open val input: List<String> by lazy {
         localInputFile.takeIf { it.exists() }?.readLines() ?: fetchInput()
     }
 
