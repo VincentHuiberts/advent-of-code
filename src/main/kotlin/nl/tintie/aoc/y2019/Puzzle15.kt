@@ -1,35 +1,12 @@
 package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
+import nl.tintie.aoc.DynamicGrid
 import java.util.*
 
-typealias MutableMapGrid = MutableMap<Int, MutableMap<Int, String>>
-
 class Puzzle15 : AocPuzzle(2019, 15) {
-    fun MutableMapGrid.getAt(position: Pair<Int, Int>) =
-        this[position.second]?.get(position.first)
-
-    fun MutableMapGrid.setAt(position: Pair<Int, Int>, value: String) =
-        getOrPut(position.second) { mutableMapOf() }.set(position.first, value)
-
-    fun MutableMapGrid.dirVisitable(position: Pair<Int, Int>, dir: Int) =
+    fun DynamicGrid<String>.dirVisitable(position: Pair<Int, Int>, dir: Int) =
         getAt(position.positionInDir(dir)).let { it == null || it == " " }
-
-    fun MutableMapGrid.printGrid() {
-        val (minY, maxY) = keys.minOrNull()!! to keys.maxOrNull()!!
-        val (minX, maxX) = values.minOfOrNull { row -> row.keys.minOrNull() ?: Int.MAX_VALUE }!! to
-                values.maxOfOrNull { row -> row.keys.maxOrNull() ?: Int.MIN_VALUE }!!
-
-        val printableGrid = MutableList(maxY - minY + 1) { MutableList(maxX - minX + 1) { " " } }
-        entries.forEach { (y, row) ->
-            row.forEach { (x, value) ->
-                printableGrid[y - minY][x - minX] = value
-            }
-        }
-        printableGrid.forEach { row ->
-            println(row.joinToString(""))
-        }
-    }
 
     fun Pair<Int, Int>.positionInDir(dir: Int) =
         when (dir) {
@@ -40,11 +17,11 @@ class Puzzle15 : AocPuzzle(2019, 15) {
             else -> error("Unknown dir $dir")
         }
 
-    private fun populateGrid(): MutableMap<Int, MutableMap<Int, String>> {
+    private fun populateGrid(): DynamicGrid<String> {
         val random = Random()
 
         val machine = IntComputer(intArrayInput)
-        val grid = mutableMapOf<Int, MutableMap<Int, String>>()
+        val grid = DynamicGrid<String>()
         var position = 0 to 0
 
         var tankFound = false
@@ -77,7 +54,7 @@ class Puzzle15 : AocPuzzle(2019, 15) {
 
 
     override fun part1(): Any? {
-        val grid = cachedOrPut("grid", ::populateGrid)
+        val grid = cachedOrPut("map", ::populateGrid)
 
         var endPointDistance = 0
         var currentPoints = listOf(0 to 0)
@@ -103,15 +80,12 @@ class Puzzle15 : AocPuzzle(2019, 15) {
     }
 
     override fun part2(): Any? {
-        val grid = cachedOrPut("grid", ::populateGrid)
-        val oxSys = grid.flatMap { (y, row) ->
-            row.map { (x, value) -> Triple(x, y, value) }
-        }.find { (_, _, value) -> value == "X" }!!
-            .let { (x, y, _) -> x to y }
+        val grid = cachedOrPut("map", ::populateGrid)
+        val oxSys = grid.findValue("X")!!
 
         var moves = 0
         var currentPoints = listOf(oxSys)
-        while(!grid.none{it.value.any { it.value == " " }}) {
+        while(grid.containsValue(" ")) {
             val newPoints = mutableListOf<Pair<Int, Int>>()
             currentPoints.forEach { currentPosition ->
                 (1..4).forEach {
@@ -130,5 +104,5 @@ class Puzzle15 : AocPuzzle(2019, 15) {
 }
 
 fun main() {
-    Puzzle15().runPart2()
+    Puzzle15().runBoth()
 }
