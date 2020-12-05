@@ -11,6 +11,5 @@ fun binSearch(initLower: Long, initUpper: Long, matchFun : (Long) -> Long): Long
             match < 0 -> upper = current
             else -> lower = current
         }
-        println(current)
     }
 }
