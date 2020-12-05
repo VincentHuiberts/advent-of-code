@@ -40,13 +40,12 @@ class Puzzle5 : AocPuzzle(2020, 5) {
 
     override fun part2(): Any = input
         .map { getCol(it) to getRow(it) }
-        .filter { (col, row) ->
-            val id = row * 8 + col
-            id == 1 || id == -1 || (row != 0 && row != 127)
-        }
         .groupBy { (_, row) -> row }
         .values
-        .find { it.size == 7 }!!
+        .sortedBy { seats -> seats.first().second  }
+        .drop(1)
+        .dropLast(1)
+        .find { it.size != 8 }!!
         .let { seats ->
             val missing = (0..7).find { seats.none { (col, _) -> col == it } }!!
             seats.first().second * 8 + missing
