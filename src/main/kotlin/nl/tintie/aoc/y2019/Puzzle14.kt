@@ -1,6 +1,7 @@
 package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
+import nl.tintie.aoc.binSearch
 import kotlin.math.min
 
 class Puzzle14 : AocPuzzle(2019, 14) {
@@ -71,24 +72,12 @@ class Puzzle14 : AocPuzzle(2019, 14) {
 
     override fun part2(): Any? {
         val amountOfOre = 1_000_000_000_000
-        var currentFuel = amountOfOre / 2
-        var lowerFuel = 0L
-        var upperFuel = amountOfOre
-        while (true) {
-            val (lower, upper) = getOreCost(Ingredient("FUEL", currentFuel)) to
-                    getOreCost(Ingredient("FUEL", currentFuel + 1))
-            when {
-                amountOfOre in lower..upper -> {
-                    return currentFuel
-                }
-                lower > amountOfOre -> {
-                    upperFuel = currentFuel
-                }
-                else -> {
-                    lowerFuel = currentFuel
-                }
+        return binSearch(0, amountOfOre) {
+            val (lower, upper) = getOreCost(Ingredient("FUEL", it)) to getOreCost(Ingredient("FUEL", it + 1))
+            when (amountOfOre) {
+                in lower..upper -> 0
+                else -> amountOfOre - lower
             }
-            currentFuel = lowerFuel + ((upperFuel - lowerFuel) / 2)
         }
     }
 }
