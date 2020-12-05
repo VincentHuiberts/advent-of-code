@@ -1,6 +1,9 @@
 package nl.tintie.aoc
 
 import com.github.kittinunf.fuel.httpGet
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.File
 import java.util.*
 import kotlin.time.ExperimentalTime
@@ -9,8 +12,9 @@ import kotlin.time.measureTimedValue
 abstract class AocPuzzle(val year: Int, val day: Int) {
     val remotePuzzlePageUrl = "$BASE_URL/$year/day/$day"
     val remoteInputUrl = "$remotePuzzlePageUrl/input"
-    val localPuzzlePageFile = File("$localCacheDir/$year/$day/puzzle.html")
-    val localInputFile = File("$localCacheDir/$year/$day/input.txt")
+    val puzzleCacheDir = "$localCacheDir/$year/$day"
+    val localPuzzlePageFile = File("$puzzleCacheDir/puzzle.html")
+    val localInputFile = File("$puzzleCacheDir/input.txt")
 
     val properties: Properties = Properties().apply { load(File("settings.properties").inputStream()) }
 
@@ -22,6 +26,17 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
     fun fetchPuzzlePage(): String {
         downloadRemoteFile(remotePuzzlePageUrl, localPuzzlePageFile)
         return localPuzzlePageFile.readText()
+    }
+
+    inline fun <reified T> cache(name: String, value: T) {
+        File("$puzzleCacheDir/cache-$name.json").writeText(Json.encodeToString(value))
+    }
+
+    inline fun <reified T> cachedOrPut(name: String, orElse: () -> T) : T {
+        return File("$puzzleCacheDir/cache-$name.json")
+            .takeIf { it.exists() }
+            ?.let { Json.decodeFromString<T>(it.readText()) }
+            ?: orElse().also { cache(name, it) }
     }
 
     private fun downloadRemoteFile(url: String, outputFile: File) {
