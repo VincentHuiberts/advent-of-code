@@ -23,3 +23,5 @@ fun <T> List<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
             acc.dropLast(1).plusElement (acc.last() + element)
         }
     }
+
+fun <T> List<T>.getRepeating(i : Int) = get(i % size)
