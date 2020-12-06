@@ -1,20 +1,15 @@
 package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
+import nl.tintie.aoc.splitCollection
 
 class Puzzle4 : AocPuzzle(2020, 4) {
     val fieldNames = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
     override fun part1(): Any? {
-        var lines = input
-        var validPassports = 0
-        while (lines.isNotEmpty()) {
-            val passportLines = lines.takeWhile { it.isNotBlank() }
-            lines = lines.drop(passportLines.size + 1)
-            val passportContent = passportLines.joinToString(" ")
-            if (fieldNames.all { passportContent.contains(it) }) validPassports++
+        return input.splitCollection { it.isEmpty() }.map { it.joinToString(" ") }.count { passportContent ->
+            fieldNames.all { passportContent.contains(it) }
         }
-        return validPassports
     }
 
     val byrPattern = """\bbyr:(\d{4})\b""".toRegex() to { groups: List<String> -> groups[1].toInt() in 1920..2002 }
@@ -40,18 +35,11 @@ class Puzzle4 : AocPuzzle(2020, 4) {
     )
 
     override fun part2(): Any? {
-        var lines = input
-        var validPassports = 0
-        while (lines.isNotEmpty()) {
-            val passportLines = lines.takeWhile { it.isNotBlank() }
-            lines = lines.drop(passportLines.size + 1)
-            val passportContent = passportLines.joinToString(" ")
-            val valid = validations.all { (pattern, validFun) ->
+        return input.splitCollection { it.isEmpty() }.map { it.joinToString(" ") }.count { passportContent ->
+            validations.all { (pattern, validFun) ->
                 pattern.findAll(passportContent).toList().let { it.size == 1 && validFun(it[0].groupValues) }
             }
-            if (valid) validPassports++
         }
-        return validPassports
     }
 }
 
