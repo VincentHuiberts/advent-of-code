@@ -38,8 +38,8 @@ class Puzzle7 : AocPuzzle(2020, 7) {
         return getBagsContaining("shiny gold").distinct().size
     }
 
-    private fun bagsContained(s: String): Int =
-        rules.find { it.bag.type == s }
+    private fun bagsContained(type: String): Int =
+        rules.find { it.bag.type == type }
             ?.let { rule -> 1 + rule.content.sumBy { bag -> bag.first * bagsContained(bag.second.type) } }
             ?: 1
 

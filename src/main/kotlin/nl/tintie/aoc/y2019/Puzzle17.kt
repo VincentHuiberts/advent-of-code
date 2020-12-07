@@ -46,7 +46,7 @@ class Puzzle17 : AocPuzzle(2019, 17) {
             |L,10,R,10,L,6
             |R,10,R,12,R,10
             |L,8,R,12,R,12,R,10
-            |N
+            |n
             |
         """.trimMargin()
         computer.input.addAll(funtions.map { it.toLong() })
