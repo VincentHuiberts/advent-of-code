@@ -33,8 +33,34 @@ class Puzzle17 : AocPuzzle(2019, 17) {
             }
         }
     }
+
+    /**
+     * L8, R12, R12, R10, R10, R12, R10, L8, R12, R12, R10, R10, R12, R10, L10, R10, L6, L10, R10, L6, R10
+     * R12, R10, L8, R12, R12, R10, R10, R12, R10, L10, R10, L6
+     */
+
+    override fun part2(): Any? {
+        val computer = IntComputer(intArrayInput)
+        val print = false
+        computer.program[0] = 2
+        val funtions = """C,B,C,B,A,A,B,C,B,A
+            |L,10,R,10,L,6
+            |R,10,R,12,R,10
+            |L,8,R,12,R,12,R,10
+            |N
+            |
+        """.trimMargin()
+        computer.input.addAll(funtions.map { it.toLong() })
+        if (print) {
+            while (!computer.finished) {
+                print(computer.runToNextOutput().toChar())
+            }
+        }
+        computer.runTillFinished()
+        return computer.output.maxOrNull()
+    }
 }
 
 fun main() {
-    Puzzle17().runPart1()
+    Puzzle17().runBoth()
 }
