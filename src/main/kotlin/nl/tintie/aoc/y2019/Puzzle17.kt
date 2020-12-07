@@ -16,7 +16,6 @@ class Puzzle17 : AocPuzzle(2019, 17) {
                 else -> scaffold.last().add(char.toString())
             }
         }
-        scaffold.print()
         val (height, width) = scaffold.filter { it.size > 0 }.size to scaffold.first().size
         return (1 until height - 1).sumBy { y ->
             (1 until width - 1).sumBy { x ->
