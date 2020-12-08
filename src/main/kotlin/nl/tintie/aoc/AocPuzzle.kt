@@ -1,5 +1,6 @@
 package nl.tintie.aoc
 
+import com.github.kittinunf.fuel.core.isSuccessful
 import com.github.kittinunf.fuel.httpGet
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -41,11 +42,11 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
 
     private fun downloadRemoteFile(url: String, outputFile: File) {
         outputFile.parentFile.mkdirs()
-        val (_, response, _) = url.httpGet()
+        val (_, response, result) = url.httpGet()
             .header("cookie", "session=${properties.getProperty("session")}")
             .response()
-
-        response.body().writeTo(outputFile.outputStream())
+        if(response.isSuccessful) response.body().writeTo(outputFile.outputStream())
+        else throw result.component2()!!
     }
 
     open val input: List<String> by lazy {
