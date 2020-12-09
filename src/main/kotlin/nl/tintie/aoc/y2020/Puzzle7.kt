@@ -40,8 +40,7 @@ class Puzzle7 : AocPuzzle(2020, 7) {
 
     private fun bagsContained(type: String): Int =
         rules.find { it.bag.type == type }
-            ?.let { rule -> 1 + rule.content.sumBy { bag -> bag.first * bagsContained(bag.second.type) } }
-            ?: 1
+            ?.let { rule -> 1 + rule.content.sumBy { bag -> bag.first * bagsContained(bag.second.type) } }!!
 
     override fun part2(): Any? {
         return bagsContained("shiny gold") - 1

@@ -6,6 +6,7 @@
 # Custom
 cache/
 settings.properties
+out/
 
 # Node artifact files
 node_modules/
@@ -58,4 +59,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-

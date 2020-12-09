@@ -13,11 +13,13 @@ import kotlin.time.measureTimedValue
 abstract class AocPuzzle(val year: Int, val day: Int) {
     val remotePuzzlePageUrl = "$BASE_URL/$year/day/$day"
     val remoteInputUrl = "$remotePuzzlePageUrl/input"
-    val puzzleCacheDir = "$localCacheDir/$year/$day"
+    val puzzleCacheDir = "$LOCAL_CACHE_DIR/$year/$day"
     val localPuzzlePageFile = File("$puzzleCacheDir/puzzle.html")
     val localInputFile = File("$puzzleCacheDir/input.txt")
 
     val properties: Properties = Properties().apply { load(File("settings.properties").inputStream()) }
+
+    val imageWriter by lazy { ImageWriter(year, day) }
 
     fun fetchInput(): List<String> {
         downloadRemoteFile(remoteInputUrl, localInputFile)
@@ -102,7 +104,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
 
     companion object {
         const val BASE_URL = "https://adventofcode.com"
-        const val localCacheDir = "cache"
+        const val LOCAL_CACHE_DIR = "cache"
         val answerPattern = """<p>Your puzzle answer was <code>(.*?)<\/code>\.""".toRegex()
     }
 }
