@@ -7,15 +7,15 @@ class PuzzleAnswers2020 {
     @TestFactory
     fun `answer should match the initially provided one`() =
         listOf(
-            Puzzle1(),
-            Puzzle2(),
-            Puzzle3(),
-            Puzzle4(),
-            Puzzle5(),
-            Puzzle6(),
-            Puzzle7(),
-            Puzzle8(),
-            Puzzle9(),
+            Puzzle1,
+            Puzzle2,
+            Puzzle3,
+            Puzzle4,
+            Puzzle5,
+            Puzzle6,
+            Puzzle7,
+            Puzzle8,
+            Puzzle9,
             Puzzle10
         ).flatMap { puzzle ->
             listOf(

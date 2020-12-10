@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle8 : AocPuzzle(2020, 8) {
+object Puzzle8 : AocPuzzle(2020, 8) {
     val lines = input.map { it.split(" ") }.map { (op, n) -> op to n.toInt() }
 
     class Console(val gameInput: List<Pair<String, Int>>) {
@@ -58,5 +58,5 @@ class Puzzle8 : AocPuzzle(2020, 8) {
 }
 
 fun main() {
-    Puzzle8().runBoth()
+    Puzzle8.runBoth()
 }

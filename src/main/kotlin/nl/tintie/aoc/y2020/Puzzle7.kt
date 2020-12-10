@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle7 : AocPuzzle(2020, 7) {
+object Puzzle7 : AocPuzzle(2020, 7) {
     data class Bag(
         val type: String
     )
@@ -48,5 +48,5 @@ class Puzzle7 : AocPuzzle(2020, 7) {
 }
 
 fun main() {
-    Puzzle7().runBoth()
+    Puzzle7.runBoth()
 }

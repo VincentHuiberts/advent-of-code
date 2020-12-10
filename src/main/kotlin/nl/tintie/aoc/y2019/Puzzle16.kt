@@ -4,7 +4,7 @@ import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.getRepeating
 import kotlin.math.abs
 
-class Puzzle16 : AocPuzzle(2019, 16) {
+object Puzzle16 : AocPuzzle(2019, 16) {
     val nums = input.first().chunked(1).map(String::toInt)
 
     val basePattern = listOf(0, 1, 0, -1)
@@ -41,5 +41,5 @@ class Puzzle16 : AocPuzzle(2019, 16) {
 }
 
 fun main() {
-    Puzzle16().runBoth()
+    Puzzle16.runBoth()
 }

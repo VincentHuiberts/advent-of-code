@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle5 : AocPuzzle(2020, 5) {
+object Puzzle5 : AocPuzzle(2020, 5) {
     fun getRow(boardingPass: String): Int {
         val (lowerRange, upperRange) = boardingPass
             .chunked(1)
@@ -53,5 +53,5 @@ class Puzzle5 : AocPuzzle(2020, 5) {
 }
 
 fun main() {
-    Puzzle5().runBoth()
+    Puzzle5.runBoth()
 }

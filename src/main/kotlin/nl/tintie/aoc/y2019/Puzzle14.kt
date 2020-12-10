@@ -4,7 +4,7 @@ import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.binSearch
 import kotlin.math.min
 
-class Puzzle14 : AocPuzzle(2019, 14) {
+object Puzzle14 : AocPuzzle(2019, 14) {
     data class Ingredient(
         val type: String,
         val amount: Long
@@ -83,5 +83,5 @@ class Puzzle14 : AocPuzzle(2019, 14) {
 }
 
 fun main() {
-    Puzzle14().runBoth()
+    Puzzle14.runBoth()
 }

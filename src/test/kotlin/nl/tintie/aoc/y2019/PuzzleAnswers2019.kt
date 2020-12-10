@@ -7,23 +7,23 @@ class PuzzleAnswers2019 {
     @TestFactory
     fun `answer should match the initially provided one`() =
         listOf(
-            Puzzle1(),
-            Puzzle2(),
-            Puzzle3(),
-            Puzzle4(),
-            Puzzle5(),
-            Puzzle6(),
-            Puzzle7(),
-            Puzzle8(),
-            Puzzle9(),
-            Puzzle10(),
-            Puzzle11(),
-            Puzzle12(),
-            Puzzle13(),
-            Puzzle14(),
-            Puzzle15(),
-            Puzzle16(),
-            Puzzle17()
+            Puzzle1,
+            Puzzle2,
+            Puzzle3,
+            Puzzle4,
+            Puzzle5,
+            Puzzle6,
+            Puzzle7,
+            Puzzle8,
+            Puzzle9,
+            Puzzle10,
+            Puzzle11,
+            Puzzle12,
+            Puzzle13,
+            Puzzle14,
+            Puzzle15,
+            Puzzle16,
+            Puzzle17
         ).flatMap { puzzle ->
             listOf(
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 1") {

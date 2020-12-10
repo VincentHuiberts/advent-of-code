@@ -4,7 +4,7 @@ import nl.tintie.aoc.AocPuzzle
 
 data class Edge(val from: String, val to: String)
 
-class Puzzle6: AocPuzzle(2019, 6) {
+object Puzzle6: AocPuzzle(2019, 6) {
     val edges = input
         .map { it.split(")") }
         .map { (from, to) -> Edge(from, to) }
@@ -38,5 +38,5 @@ class Puzzle6: AocPuzzle(2019, 6) {
 }
 
 fun main() {
-    Puzzle6().runBoth()
+    Puzzle6.runBoth()
 }

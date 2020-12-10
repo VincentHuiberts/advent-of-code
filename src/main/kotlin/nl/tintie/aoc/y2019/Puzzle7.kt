@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle7 : AocPuzzle(2019, 7) {
+object Puzzle7 : AocPuzzle(2019, 7) {
     override fun part1(): Any? {
         return getAllPhaseSettingsOptions(listOf(0, 1, 2, 3, 4)).map { phaseSetting ->
             val machines = phaseSetting.map {
@@ -56,5 +56,5 @@ class Puzzle7 : AocPuzzle(2019, 7) {
 }
 
 fun main() {
-    Puzzle7().runBoth()
+    Puzzle7.runBoth()
 }

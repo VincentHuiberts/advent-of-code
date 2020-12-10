@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle3 : AocPuzzle(2020, 3) {
+object Puzzle3 : AocPuzzle(2020, 3) {
     private val rows = input.map { it.chunked(1) }
 
     private fun treesEncoundered(horizontalSpeed: Int, verticalSpeed: Int): Long {
@@ -32,5 +32,5 @@ class Puzzle3 : AocPuzzle(2020, 3) {
 }
 
 fun main() {
-    Puzzle3().runBoth()
+    Puzzle3.runBoth()
 }

@@ -22,7 +22,7 @@ class Line(instructions: List<String>) {
         }.drop(1)
 }
 
-class Puzzle3 : AocPuzzle(2019, 3) {
+object Puzzle3 : AocPuzzle(2019, 3) {
     override fun part1(): Any? {
         val (line1, line2) = input.map { Line(it.split(",")) }
         return line1.coordinates.intersect(line2.coordinates)
@@ -40,5 +40,5 @@ class Puzzle3 : AocPuzzle(2019, 3) {
 }
 
 fun main() {
-    Puzzle3().runBoth()
+    Puzzle3.runBoth()
 }

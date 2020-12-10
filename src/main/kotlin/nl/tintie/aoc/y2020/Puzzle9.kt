@@ -3,7 +3,7 @@ package nl.tintie.aoc.y2020
 import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.combinations
 
-class Puzzle9: AocPuzzle(2020, 9) {
+object Puzzle9: AocPuzzle(2020, 9) {
     val nums = input.map { it.toLong() }
 
     override fun part1(): Any? {
@@ -30,5 +30,5 @@ class Puzzle9: AocPuzzle(2020, 9) {
 }
 
 fun main() {
-    Puzzle9().runBoth()
+    Puzzle9.runBoth()
 }

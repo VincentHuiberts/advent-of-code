@@ -5,7 +5,7 @@ import java.lang.Math.abs
 import java.lang.Math.max
 import kotlin.reflect.KProperty1
 
-class Puzzle12 : AocPuzzle(2019, 12) {
+object Puzzle12 : AocPuzzle(2019, 12) {
     data class Moon(
         val x: Int,
         val y: Int,
@@ -131,5 +131,5 @@ fun Puzzle12.Moon.yCopy(pos: Int, v: Int) = copy(y = pos, vY = v)
 fun Puzzle12.Moon.zCopy(pos: Int, v: Int) = copy(z = pos, vZ = v)
 
 fun main() {
-    Puzzle12().runPart2()
+    Puzzle12.runPart2()
 }

@@ -3,7 +3,7 @@ package nl.tintie.aoc.y2020
 import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.splitCollection
 
-class Puzzle4 : AocPuzzle(2020, 4) {
+object Puzzle4 : AocPuzzle(2020, 4) {
     val fieldNames = listOf("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
 
     override fun part1(): Any? {
@@ -44,5 +44,5 @@ class Puzzle4 : AocPuzzle(2020, 4) {
 }
 
 fun main() {
-    Puzzle4().runBoth()
+    Puzzle4.runBoth()
 }

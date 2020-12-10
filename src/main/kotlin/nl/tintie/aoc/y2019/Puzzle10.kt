@@ -5,7 +5,7 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 
-class Puzzle10 : AocPuzzle(2019, 10) {
+object Puzzle10 : AocPuzzle(2019, 10) {
     data class Point(
         val char: String,
         val x: Int,
@@ -53,5 +53,5 @@ class Puzzle10 : AocPuzzle(2019, 10) {
 }
 
 fun main() {
-    Puzzle10().runBoth()
+    Puzzle10.runBoth()
 }

@@ -4,7 +4,7 @@ import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.MemoizedFunc
 
 object Puzzle10 : AocPuzzle(2020, 10) {
-    val adapters = input.map { it.toLong() }.sorted().let { it + (it.last() + 3) }
+    private val adapters = input.map { it.toLong() }.sorted().let { it + (it.last() + 3) }
 
     override fun part1(): Any? {
         val (_, outcome) = adapters.fold(0L to mutableMapOf<Long, Long>()) { (input, results), adapter ->
@@ -17,10 +17,7 @@ object Puzzle10 : AocPuzzle(2020, 10) {
 
     val options = MemoizedFunc<Long, Long> { input: Long ->
         if (input == adapters.last()) 1 else {
-            adapters.filter { it in (input + 1)..(input + 3) }
-                .let { options ->
-                    options.map { recurse(it) }.sum()
-                }
+            adapters.filter { it in (input + 1)..(input + 3) }.map { recurse(it) }.sum()
         }
     }
 

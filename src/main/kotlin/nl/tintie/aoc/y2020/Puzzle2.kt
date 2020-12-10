@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle2 : AocPuzzle(2020, 2) {
+object Puzzle2 : AocPuzzle(2020, 2) {
     private val passwordPattern = """(\d+)-(\d+) (\w): (\w+)""".toRegex()
 
     private data class Password(
@@ -36,5 +36,5 @@ class Puzzle2 : AocPuzzle(2020, 2) {
 }
 
 fun main() {
-    Puzzle2().runBoth()
+    Puzzle2.runBoth()
 }

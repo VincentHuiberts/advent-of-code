@@ -2,9 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-
-
-class Puzzle11 : AocPuzzle(2019, 11) {
+object Puzzle11 : AocPuzzle(2019, 11) {
     data class Point(val x: Int, val y: Int, var value: String = ".")
 
     val directions = listOf("N", "E", "S", "W")
@@ -92,5 +90,5 @@ class Puzzle11 : AocPuzzle(2019, 11) {
 }
 
 fun main() {
-    Puzzle11().runBoth()
+    Puzzle11.runBoth()
 }

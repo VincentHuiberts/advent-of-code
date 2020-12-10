@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle9 : AocPuzzle(2019, 9) {
+object Puzzle9 : AocPuzzle(2019, 9) {
     override fun part1(): Any? {
         val machine = IntComputer(intArrayInput)
         machine.input.add(1)
@@ -19,5 +19,5 @@ class Puzzle9 : AocPuzzle(2019, 9) {
 }
 
 fun main() {
-    Puzzle9().runBoth()
+    Puzzle9.runBoth()
 }

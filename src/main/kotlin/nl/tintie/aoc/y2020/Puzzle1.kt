@@ -3,7 +3,7 @@ package nl.tintie.aoc.y2020
 import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.combinations
 
-class Puzzle1 : AocPuzzle(2020, 1) {
+object Puzzle1 : AocPuzzle(2020, 1) {
     val intInput = input.map { it.toInt() }.asSequence()
 
     private fun Sequence<List<Int>>.findAndMultiply(): Int = find { nums ->
@@ -16,5 +16,5 @@ class Puzzle1 : AocPuzzle(2020, 1) {
 }
 
 fun main() {
-    Puzzle1().runPart2()
+    Puzzle1.runPart2()
 }

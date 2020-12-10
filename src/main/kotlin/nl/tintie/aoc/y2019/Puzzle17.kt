@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle17 : AocPuzzle(2019, 17) {
+object Puzzle17 : AocPuzzle(2019, 17) {
     fun List<List<String>>.print() = forEach {
         println(it.joinToString(""))
     }
@@ -61,5 +61,5 @@ class Puzzle17 : AocPuzzle(2019, 17) {
 }
 
 fun main() {
-    Puzzle17().runBoth()
+    Puzzle17.runBoth()
 }

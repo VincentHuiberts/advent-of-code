@@ -3,7 +3,7 @@ package nl.tintie.aoc.y2019
 import nl.tintie.aoc.AocPuzzle
 import kotlin.math.max
 
-class Puzzle1 : AocPuzzle(2019, 1) {
+object Puzzle1 : AocPuzzle(2019, 1) {
     override fun part1() = input
         .map { it.toInt() }
         .map { it / 3 - 2 }
@@ -27,5 +27,5 @@ class Puzzle1 : AocPuzzle(2019, 1) {
 }
 
 fun main() {
-    Puzzle1().runBoth()
+    Puzzle1.runBoth()
 }

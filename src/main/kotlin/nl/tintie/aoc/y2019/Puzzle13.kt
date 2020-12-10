@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle13 : AocPuzzle(2019, 13) {
+object Puzzle13 : AocPuzzle(2019, 13) {
     data class Tile(
         val x: Long, val y: Long, val type: Long
     )
@@ -46,5 +46,5 @@ class Puzzle13 : AocPuzzle(2019, 13) {
 }
 
 fun main() {
-    Puzzle13().runPart2()
+    Puzzle13.runPart2()
 }

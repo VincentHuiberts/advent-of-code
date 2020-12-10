@@ -6,7 +6,7 @@ class Image(input: List<Int>, width: Int, height: Int) {
     val layers = input.chunked(width).chunked(height)
 }
 
-class Puzzle8 : AocPuzzle(2019, 8) {
+object Puzzle8 : AocPuzzle(2019, 8) {
     override fun part1(): Any? {
         val minlayer =
             Image(input[0].chunked(1).map { it.toInt() }, 25, 6).layers.minByOrNull { it.flatten().count { it == 0 } }
@@ -45,5 +45,5 @@ class Puzzle8 : AocPuzzle(2019, 8) {
 }
 
 fun main() {
-    Puzzle8().runBoth()
+    Puzzle8.runBoth()
 }

@@ -4,7 +4,7 @@ import nl.tintie.aoc.AocPuzzle
 import nl.tintie.aoc.DynamicGrid
 import java.util.*
 
-class Puzzle15 : AocPuzzle(2019, 15) {
+object Puzzle15 : AocPuzzle(2019, 15) {
     fun DynamicGrid<String>.dirVisitable(position: Pair<Int, Int>, dir: Int) =
         getAt(position.positionInDir(dir)).let { it == null || it == " " }
 
@@ -21,7 +21,7 @@ class Puzzle15 : AocPuzzle(2019, 15) {
         val random = Random()
 
         val machine = IntComputer(intArrayInput)
-        val grid = DynamicGrid<String>()
+        val grid = DynamicGrid(" ")
         var position = 0 to 0
 
         var tankFound = false
@@ -104,5 +104,5 @@ class Puzzle15 : AocPuzzle(2019, 15) {
 }
 
 fun main() {
-    Puzzle15().runBoth()
+    Puzzle15.runBoth()
 }

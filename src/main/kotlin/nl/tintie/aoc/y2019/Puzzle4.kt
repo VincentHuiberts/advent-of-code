@@ -2,7 +2,7 @@ package nl.tintie.aoc.y2019
 
 import nl.tintie.aoc.AocPuzzle
 
-class Puzzle4 : AocPuzzle(2019, 4) {
+object Puzzle4 : AocPuzzle(2019, 4) {
     private fun numberOk(number: Int, groupAssert: (List<String>) -> Boolean): Boolean {
         val chars = number.toString()
             .chunked(1)
@@ -37,5 +37,5 @@ class Puzzle4 : AocPuzzle(2019, 4) {
 }
 
 fun main() {
-    Puzzle4().runBoth()
+    Puzzle4.runBoth()
 }
