@@ -1,6 +1,7 @@
 package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
+import nl.tintie.aoc.MemoizedFunc
 
 object Puzzle10 : AocPuzzle(2020, 10) {
     val adapters = input.map { it.toLong() }.sorted().let { it + (it.last() + 3) }
@@ -14,16 +15,12 @@ object Puzzle10 : AocPuzzle(2020, 10) {
         return outcome[1]!! * outcome[3]!!
     }
 
-    private val results = mutableMapOf<Long, Long>()
-
-    private fun options(input: Long): Long {
-        return results.getOrPut(input) {
-            if (input == adapters.last()) 1 else {
-                adapters.filter { it in (input + 1)..(input + 3) }
-                    .let { options ->
-                        options.map { options(it) }.sum()
-                    }
-            }
+    val options = MemoizedFunc<Long, Long> { input: Long ->
+        if (input == adapters.last()) 1 else {
+            adapters.filter { it in (input + 1)..(input + 3) }
+                .let { options ->
+                    options.map { recurse(it) }.sum()
+                }
         }
     }
 
