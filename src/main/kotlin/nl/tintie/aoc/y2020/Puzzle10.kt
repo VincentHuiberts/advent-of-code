@@ -7,9 +7,9 @@ object Puzzle10 : AocPuzzle(2020, 10) {
     private val adapters = input.map { it.toLong() }.sorted().let { it + (it.last() + 3) }
 
     override fun part1(): Any? {
-        val (_, outcome) = adapters.fold(0L to mutableMapOf<Long, Long>()) { (input, results), adapter ->
+        val (_, outcome) = adapters.fold(0L to mutableMapOf<Long, Int>()) { (input, results), adapter ->
             val diff = adapter - input
-            results[diff] = results.getOrDefault(diff, 0) + 1L
+            results[diff] = results.getOrDefault(diff, 0) + 1
             adapter to results
         }
         return outcome[1]!! * outcome[3]!!
