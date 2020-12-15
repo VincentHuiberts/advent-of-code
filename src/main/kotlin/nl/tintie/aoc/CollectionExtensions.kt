@@ -11,6 +11,14 @@ fun <T> Sequence<T>.combinations(n: Int): Sequence<List<T>> {
     }
 }
 
+fun <T> combinations(options: List<T>, size: Int): List<List<T>> {
+    return if(size > 1) {
+        options.flatMap { opt -> combinations(options, size - 1).map { listOf(opt) + it } }
+    } else {
+        options.map { listOf(it) }
+    }
+}
+
 /**
  * Splits a list of type `T` into multiple sublists of type `T` based on `isDelimiter`.
  * The delimiter is not included in the result.
