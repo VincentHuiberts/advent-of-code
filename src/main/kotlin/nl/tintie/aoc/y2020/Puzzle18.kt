@@ -10,7 +10,7 @@ object Puzzle18 : AocPuzzle(2020, 18) {
     class SimpleExpression(
         val expression: String
     ) {
-        val nums = expression.split("(\\+|\\*)".toRegex()).map { it.trim().toLong() }
+        val nums = expression.split("([+*])".toRegex()).map { it.trim().toLong() }
         val operators = expression.split("\\d+".toRegex()).filter { it.isNotBlank() }.map { it.trim() }
 
         fun calculate(): Long {
@@ -39,10 +39,6 @@ object Puzzle18 : AocPuzzle(2020, 18) {
             }
         }
     }
-//
-//    override val input: List<String>
-//        get() = "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))".lines()
-
 
     fun resolveExpression(line: String, calculateFun: SimpleExpression.() -> Long): Long {
         val simpleLine = if (nestedExprPattern.containsMatchIn(line)) {
