@@ -24,18 +24,22 @@ object Puzzle18 : AocPuzzle(2020, 18) {
         }
 
         fun calculatePt2(collapsedExpression: String = expression): Long {
-            return if(plusSum.containsMatchIn(collapsedExpression)) {
-                calculatePt2(plusSum.replace(collapsedExpression) {
-                    val (n1, n2) = it.groupValues.drop(1).map { it.toLong() }
-                    (n1 + n2).toString()
-                })
-            } else if(timesSum.containsMatchIn(collapsedExpression)) {
-                calculatePt2(timesSum.replace(collapsedExpression) {
-                    val (n1, n2) = it.groupValues.drop(1).map { it.toLong() }
-                    (n1 * n2).toString()
-                })
-            } else {
-                collapsedExpression.trim().toLong()
+            return when {
+                plusSum.containsMatchIn(collapsedExpression) -> {
+                    calculatePt2(plusSum.replace(collapsedExpression) {
+                        val (n1, n2) = it.groupValues.drop(1).map { it.toLong() }
+                        (n1 + n2).toString()
+                    })
+                }
+                timesSum.containsMatchIn(collapsedExpression) -> {
+                    calculatePt2(timesSum.replace(collapsedExpression) {
+                        val (n1, n2) = it.groupValues.drop(1).map { it.toLong() }
+                        (n1 * n2).toString()
+                    })
+                }
+                else -> {
+                    collapsedExpression.trim().toLong()
+                }
             }
         }
     }

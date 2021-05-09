@@ -4,7 +4,7 @@ package nl.tintie.aoc
  * Create an object with given [func] and apply memoization to it.
  */
 class MemoizedFunc<I, O>(val func: MemoizedFunc<I, O>.(I) -> O) {
-    private val memoizedCalls = mutableMapOf<I, O>()
+    internal val memoizedCalls = mutableMapOf<I, O>()
 
     /**
      * Separate function to call the provided function for readability.
