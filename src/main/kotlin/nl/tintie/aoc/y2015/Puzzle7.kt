@@ -48,6 +48,9 @@ object Puzzle7 : AocPuzzle(2015, 7) {
         Instruction(type, pattern.matchEntire(line)!!)
     }
 
+    infix fun UShort.shl(bits: UShort) = (toUInt() shl (bits.toInt())).toUShort()
+    infix fun UShort.shr(bits: UShort) = (toUInt() shr (bits.toInt())).toUShort()
+
     @OptIn(ExperimentalStdlibApi::class)
     fun Map<String, UShort>.processInstruction(instruction: Instruction): Map<String, UShort> {
         val wires = toMutableMap()
@@ -56,8 +59,8 @@ object Puzzle7 : AocPuzzle(2015, 7) {
             InstructionType.ASSIGN_PROPERTY -> wires[instruction.get(2)] = getValue(1)
             InstructionType.AND -> wires[instruction.get(3)] = getValue(1) and getValue(2)
             InstructionType.OR -> wires[instruction.get(3)] = getValue(1) or getValue(2)
-            InstructionType.LSHIFT -> wires[instruction.get(3)] = (getValue(1).toUInt() shl (getValue(2).toInt())).toUShort()
-            InstructionType.RSHIFT -> wires[instruction.get(3)] = (getValue(1).toUInt() shr (getValue(2).toInt())).toUShort()
+            InstructionType.LSHIFT -> wires[instruction.get(3)] = getValue(1) shl getValue(2)
+            InstructionType.RSHIFT -> wires[instruction.get(3)] = getValue(1) shr getValue(2)
             InstructionType.NOT -> wires[instruction.get(2)] = getValue(1).inv()
         }
         return wires.toMap()
