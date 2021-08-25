@@ -12,10 +12,22 @@ fun <T> Sequence<T>.combinations(n: Int): Sequence<List<T>> {
 }
 
 fun <T> combinations(options: List<T>, size: Int): List<List<T>> {
-    return if(size > 1) {
+    return if (size > 1) {
         options.flatMap { opt -> combinations(options, size - 1).map { listOf(opt) + it } }
     } else {
         options.map { listOf(it) }
+    }
+}
+
+fun <T> uniqueOrderedCombinations(options: List<T>): List<List<T>> {
+    return if (options.size == 1) {
+        listOf(options)
+    } else {
+        options.flatMap { option ->
+            uniqueOrderedCombinations(options - option).map {
+                listOf(option) + it
+            }
+        }
     }
 }
 
@@ -25,11 +37,11 @@ fun <T> combinations(options: List<T>, size: Int): List<List<T>> {
  */
 fun <T> List<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
     fold(listOf(listOf())) { acc, element ->
-        if(isDelimiter(element)) {
+        if (isDelimiter(element)) {
             acc.plusElement(listOf())
         } else {
-            acc.dropLast(1).plusElement (acc.last() + element)
+            acc.dropLast(1).plusElement(acc.last() + element)
         }
     }
 
-fun <T> List<T>.getRepeating(i : Int) = get(i % size)
+fun <T> List<T>.getRepeating(i: Int) = get(i % size)
