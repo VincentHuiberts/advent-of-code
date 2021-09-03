@@ -1,8 +1,6 @@
 package nl.tintie.aoc.y2015
 
 import nl.tintie.aoc.AocPuzzle
-import nl.tintie.aoc.combinations
-import nl.tintie.aoc.uniqueOrderedCombinations
 
 object Puzzle10 : AocPuzzle(2015, 10) {
     val repeatingDigitPattern = """(\d)\1*""".toRegex()

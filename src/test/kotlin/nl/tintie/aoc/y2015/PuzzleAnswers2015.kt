@@ -1,5 +1,7 @@
 package nl.tintie.aoc.y2015
 
+import nl.tintie.aoc.validatePart1
+import nl.tintie.aoc.validatePart2
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 
@@ -16,7 +18,13 @@ class PuzzleAnswers2015 {
             Puzzle7,
             Puzzle8,
             Puzzle9,
-            Puzzle10
+            Puzzle10,
+            Puzzle11,
+            Puzzle12,
+            Puzzle13,
+            Puzzle14,
+            Puzzle15,
+            Puzzle16
         ).flatMap { puzzle ->
             listOf(
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 1") {

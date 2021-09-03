@@ -1,7 +1,7 @@
 package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
-import nl.tintie.aoc.combinations
+import nl.tintie.aoc.allArrangements
 
 object Puzzle14 : AocPuzzle(2020, 14) {
     val SET_MEM_PATTERN = """mem\[(\d+)\] = (\d+)""".toRegex()
@@ -40,7 +40,7 @@ object Puzzle14 : AocPuzzle(2020, 14) {
                 acc.mask = line.substring(7)
             } else {
                 val xIdx = acc.mask!!.mapIndexedNotNull { index, c -> if (c == 'X') index else null }
-                val xOpts = combinations(listOf('0', '1'), xIdx.size)
+                val xOpts = allArrangements(listOf('0', '1'), xIdx.size, true)
                 val (address, num) = SET_MEM_PATTERN.find(line)!!.groupValues.drop(1).map(String::toLong)
                 val addressBin = address.toBinStr()
 

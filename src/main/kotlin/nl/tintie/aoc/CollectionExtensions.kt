@@ -1,8 +1,5 @@
 package nl.tintie.aoc
 
-/**
- * Creates a sequence of lists with size `n` with all possible combinations.
- */
 fun <T> Sequence<T>.combinations(n: Int): Sequence<List<T>> {
     return if (n <= 1) {
         map { listOf(it) }
@@ -11,23 +8,15 @@ fun <T> Sequence<T>.combinations(n: Int): Sequence<List<T>> {
     }
 }
 
-fun <T> combinations(options: List<T>, size: Int): List<List<T>> {
+fun <T> allArrangements(options: List<T>, size: Int = options.size, reuseElements: Boolean = false): List<List<T>> {
     return if (size > 1) {
-        options.flatMap { opt -> combinations(options, size - 1).map { listOf(opt) + it } }
-    } else {
-        options.map { listOf(it) }
-    }
-}
-
-fun <T> uniqueOrderedCombinations(options: List<T>): List<List<T>> {
-    return if (options.size == 1) {
-        listOf(options)
-    } else {
-        options.flatMap { option ->
-            uniqueOrderedCombinations(options - option).map {
-                listOf(option) + it
+        options.flatMap { opt ->
+            allArrangements(if (reuseElements) options else options - opt, size - 1, reuseElements).map {
+                listOf(opt) + it
             }
         }
+    } else {
+        options.map { listOf(it) }
     }
 }
 

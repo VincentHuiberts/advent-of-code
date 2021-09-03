@@ -1,6 +1,7 @@
 package nl.tintie.aoc.y2020
 
 import nl.tintie.aoc.AocPuzzle
+import nl.tintie.aoc.allArrangements
 import nl.tintie.aoc.combinations
 
 object Puzzle9: AocPuzzle(2020, 9) {

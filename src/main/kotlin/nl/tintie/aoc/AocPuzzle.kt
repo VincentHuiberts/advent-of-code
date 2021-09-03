@@ -94,14 +94,6 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
         runPart2()
     }
 
-    private fun assertAnswer(name: String, expected: String?, actual: Any?) =
-        assert(expected.toString() == actual.toString()) {
-            "Year $year Day $day $name Expected '$expected', but was '$actual'"
-        }
-
-    fun validatePart1() = assertAnswer("Part1", part1Answer, part1())
-    fun validatePart2() = assertAnswer("Part2", part2Answer, part2())
-
     companion object {
         const val BASE_URL = "https://adventofcode.com"
         const val LOCAL_CACHE_DIR = "cache"

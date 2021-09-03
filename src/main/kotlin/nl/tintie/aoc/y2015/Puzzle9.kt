@@ -1,8 +1,7 @@
 package nl.tintie.aoc.y2015
 
 import nl.tintie.aoc.AocPuzzle
-import nl.tintie.aoc.combinations
-import nl.tintie.aoc.uniqueOrderedCombinations
+import nl.tintie.aoc.allArrangements
 
 object Puzzle9 : AocPuzzle(2015, 9) {
     val routePattern = """(\w+) to (\w+) = (\d+)""".toRegex()
@@ -29,11 +28,11 @@ object Puzzle9 : AocPuzzle(2015, 9) {
         .find { it.places.containsAll(listOf(place1, place2)) }?.distance
 
     override fun part1(): Any? {
-        return uniqueOrderedCombinations(places).mapNotNull(::getRouteDistance).minOrNull()
+        return allArrangements(places).mapNotNull(::getRouteDistance).minOrNull()
     }
 
     override fun part2(): Any? {
-        return uniqueOrderedCombinations(places).mapNotNull(::getRouteDistance).maxOrNull()
+        return allArrangements(places).mapNotNull(::getRouteDistance).maxOrNull()
     }
 }
 

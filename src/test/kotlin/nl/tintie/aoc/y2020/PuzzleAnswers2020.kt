@@ -1,5 +1,7 @@
 package nl.tintie.aoc.y2020
 
+import nl.tintie.aoc.validatePart1
+import nl.tintie.aoc.validatePart2
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 
