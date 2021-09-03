@@ -33,6 +33,7 @@ object Puzzle14 : AocPuzzle(2020, 14) {
         }.memory.values.sum()
     }
 
+    // FIXME: Somehow this solution is not correct (must have changed something before committing)
     override fun part2(): Any? {
         return input.fold(Accumulator()) { acc, line ->
             if (line.startsWith("mask = ")) {

@@ -19,8 +19,7 @@ class PuzzleAnswers2020 {
             Puzzle10,
             Puzzle11,
             Puzzle12,
-//            Puzzle13,
-            Puzzle14,
+//            Puzzle14,
             Puzzle15,
             Puzzle16,
             Puzzle17,
@@ -31,7 +30,7 @@ class PuzzleAnswers2020 {
                     puzzle.validatePart1()
                 },
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 2") {
-                    puzzle.validatePart1()
+                    puzzle.validatePart2()
                 }
             )
         }
