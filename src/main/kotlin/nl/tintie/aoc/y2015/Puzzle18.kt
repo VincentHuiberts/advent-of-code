@@ -6,13 +6,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 object Puzzle18 : AocPuzzle(2015, 18) {
-//    override val input = """.#.#.#
-//...##.
-//#....#
-//..#...
-//#.#..#
-//####..""".lines()
-
     val grid = input.map { it.windowed(1) }
 
     fun List<List<String>>.countNeighbours(pX: Int, pY: Int, state: String) =
