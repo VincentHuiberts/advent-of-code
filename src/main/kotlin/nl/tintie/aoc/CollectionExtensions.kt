@@ -33,4 +33,4 @@ fun <T> List<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
         }
     }
 
-fun <T> List<T>.getRepeating(i: Int) = get(i % size)
+fun <T> List<T>.getRepeating(i: Int) = get((i + size) % size)

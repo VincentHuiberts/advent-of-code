@@ -35,7 +35,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
         File("$puzzleCacheDir/cache-$name.json").writeText(Json.encodeToString(value))
     }
 
-    inline fun <reified T> cachedOrPut(name: String, orElse: () -> T) : T {
+    inline fun <reified T> cachedOrPut(name: String, orElse: () -> T): T {
         return File("$puzzleCacheDir/cache-$name.json")
             .takeIf { it.exists() }
             ?.let { Json.decodeFromString<T>(it.readText()) }
@@ -47,7 +47,7 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
         val (_, response, result) = url.httpGet()
             .header("cookie", "session=${properties.getProperty("session")}")
             .response()
-        if(response.isSuccessful) response.body().writeTo(outputFile.outputStream())
+        if (response.isSuccessful) response.body().writeTo(outputFile.outputStream())
         else throw result.component2()!!
     }
 
