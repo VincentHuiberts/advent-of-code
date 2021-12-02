@@ -9,7 +9,8 @@ class PuzzleAnswers2021 {
     @TestFactory
     fun `answer should match the initially provided one`() =
         listOf(
-            Puzzle1
+            Puzzle1,
+            Puzzle2
         ).flatMap { puzzle ->
             listOf(
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 1") {
