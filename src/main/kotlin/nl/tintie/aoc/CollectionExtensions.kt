@@ -20,6 +20,20 @@ fun <T> allArrangements(options: List<T>, size: Int = options.size, reuseElement
     }
 }
 
+fun <T> List<String>.pivot(transform: (Char) -> T): List<List<T>> = fold(listOf<List<Char>>()) { acc, cur ->
+    cur.toCharArray().mapIndexed { i, c ->
+        acc.getOrElse(i) { listOf() } + c
+    }
+}.map { row -> row.map(transform) }
+
+/**
+ * Count the number of occurrences for each element in the [List]. Sorted by least occurring to most.
+ */
+fun <T> List<T>.countOccurrences() = groupBy { it }
+    .mapValues { it.value.size }
+    .entries.sortedBy { (_, size) -> size }
+    .map { it.toPair() }
+
 /**
  * Splits a list of type `T` into multiple sublists of type `T` based on `isDelimiter`.
  * The delimiter is not included in the result.
