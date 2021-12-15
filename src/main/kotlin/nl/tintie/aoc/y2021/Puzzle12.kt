@@ -27,13 +27,17 @@ object Puzzle12 : AocPuzzle(2021, 12) {
                 endNode.apply { connectedNodes = endNode.connectedNodes + startNode }
     }
 
-    fun findAllRoutes(nodes: List<Node>, currentPath: List<Node>): Set<List<Node>> {
+    fun findAllRoutes(
+        nodes: List<Node>,
+        currentPath: List<Node>,
+        canVisit: List<Node>.(Node) -> Boolean
+    ): Set<List<Node>> {
         val currentNode = currentPath.lastOrNull()!!
         return currentNode.connectedNodes.mapNotNull { nextNode ->
             when {
                 nextNode.name == "start" -> null
                 nextNode.name == "end" -> setOf(currentPath + nextNode)
-                nextNode.isBig || nextNode !in currentPath -> findAllRoutes(nodes, currentPath + nextNode)
+                currentPath.canVisit(nextNode) -> findAllRoutes(nodes, currentPath + nextNode, canVisit)
                 else -> null
             }
         }.flatten().toSet()
@@ -41,32 +45,20 @@ object Puzzle12 : AocPuzzle(2021, 12) {
 
 
     override fun part1(): Any? {
-        return findAllRoutes(caves, caves.filter { it.name == "start" }).size
+        return findAllRoutes(caves, caves.filter { it.name == "start" }) { it.isBig || it !in this }.size
     }
 
     fun List<Node>.canVisitPt2(node: Node): Boolean = when {
         node.isBig || node !in this -> true
         else -> {
-            groupBy { it }.entries.all { (k,v) ->
+            groupBy { it }.entries.all { (k, v) ->
                 k.isBig || v.size <= 1
             }
         }
     }
 
-
-    fun findAllRoutesPt2(nodes: List<Node>, currentPath: List<Node>): Set<List<Node>> {
-        return currentPath.last().connectedNodes.mapNotNull { nextNode ->
-            when {
-                nextNode.name == "start" -> null
-                nextNode.name == "end" -> setOf(currentPath + nextNode)
-                currentPath.canVisitPt2(nextNode) -> findAllRoutesPt2(nodes, currentPath + nextNode)
-                else -> null
-            }
-        }.flatten().toSet()
-    }
-
     override fun part2(): Any? {
-        return findAllRoutesPt2(caves, caves.filter { it.name == "start" }).size
+        return findAllRoutes(caves, caves.filter { it.name == "start" }) { canVisitPt2(it) }.size
     }
 }
 
