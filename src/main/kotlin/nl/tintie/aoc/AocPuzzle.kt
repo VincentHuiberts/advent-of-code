@@ -5,31 +5,40 @@ import com.github.kittinunf.fuel.httpGet
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import nl.tintie.aoc.y2021.Puzzle6
 import org.jsoup.Jsoup
 import java.io.File
 import java.util.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
+val properties: Properties = Properties().apply { load(File("settings.properties").inputStream()) }
+
+fun downloadRemoteAocFile(url: String, outputFile: File) {
+    outputFile.parentFile.mkdirs()
+    val (_, response, result) = url.httpGet()
+        .header("cookie", "session=${properties.getProperty("session")}")
+        .response()
+    if (response.isSuccessful) response.body().writeTo(outputFile.outputStream())
+    else throw result.component2()!!
+}
+
+val AocPuzzle.imageWriter get() = ImageWriter(year, day)
+
 abstract class AocPuzzle(val year: Int, val day: Int) {
     val remotePuzzlePageUrl = "$BASE_URL/$year/day/$day"
     val remoteInputUrl = "$remotePuzzlePageUrl/input"
     val puzzleCacheDir = "$LOCAL_CACHE_DIR/$year/$day"
     val localPuzzlePageFile = File("$puzzleCacheDir/puzzle.html")
+
     val localInputFile = File("$puzzleCacheDir/input.txt")
 
-    val properties: Properties = Properties().apply { load(File("settings.properties").inputStream()) }
-
-    val imageWriter by lazy { ImageWriter(year, day) }
-
     fun fetchInput(): List<String> {
-        downloadRemoteFile(remoteInputUrl, localInputFile)
+        downloadRemoteAocFile(remoteInputUrl, localInputFile)
         return localInputFile.readLines()
     }
 
-    fun fetchPuzzlePage(): String {
-        downloadRemoteFile(remotePuzzlePageUrl, localPuzzlePageFile)
+    fun fetchPuzzle(): String {
+        downloadRemoteAocFile(remotePuzzlePageUrl, localPuzzlePageFile)
         return localPuzzlePageFile.readText()
     }
 
@@ -44,21 +53,12 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
             ?: orElse().also { cache(name, it) }
     }
 
-    private fun downloadRemoteFile(url: String, outputFile: File) {
-        outputFile.parentFile.mkdirs()
-        val (_, response, result) = url.httpGet()
-            .header("cookie", "session=${properties.getProperty("session")}")
-            .response()
-        if (response.isSuccessful) response.body().writeTo(outputFile.outputStream())
-        else throw result.component2()!!
-    }
-
     open val input: List<String> by lazy {
         localInputFile.takeIf { it.exists() }?.readLines() ?: fetchInput()
     }
 
     val puzzleFile: String by lazy {
-        localPuzzlePageFile.takeIf { it.exists() }?.readText() ?: fetchPuzzlePage()
+        localPuzzlePageFile.takeIf { it.exists() }?.readText() ?: fetchPuzzle()
     }
 
     open val part1Answer: String? by lazy {

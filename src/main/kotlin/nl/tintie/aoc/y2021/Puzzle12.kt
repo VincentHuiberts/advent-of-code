@@ -45,20 +45,20 @@ object Puzzle12 : AocPuzzle(2021, 12) {
 
 
     override fun part1(): Any? {
-        return findAllRoutes(caves, caves.filter { it.name == "start" }) { it.isBig || it !in this }.size
-    }
-
-    fun List<Node>.canVisitPt2(node: Node): Boolean = when {
-        node.isBig || node !in this -> true
-        else -> {
-            groupBy { it }.entries.all { (k, v) ->
-                k.isBig || v.size <= 1
-            }
-        }
+        return findAllRoutes(caves, caves.filter { it.name == "start" }) { node -> node.isBig || node !in this }.size
     }
 
     override fun part2(): Any? {
-        return findAllRoutes(caves, caves.filter { it.name == "start" }) { canVisitPt2(it) }.size
+        return findAllRoutes(caves, caves.filter { it.name == "start" }) { node ->
+            when {
+                node.isBig || node !in this -> true
+                else -> {
+                    groupBy { it }.entries.all { (k, v) ->
+                        k.isBig || v.size <= 1
+                    }
+                }
+            }
+        }.size
     }
 }
 
