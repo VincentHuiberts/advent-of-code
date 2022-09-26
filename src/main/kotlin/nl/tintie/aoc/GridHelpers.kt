@@ -1,6 +1,7 @@
 package nl.tintie.aoc
 
 import kotlinx.serialization.Serializable
+import nl.tintie.aoc.y2021.Puzzle9
 
 interface Grid<E> {
     val minX: Int
@@ -114,3 +115,14 @@ class DynamicGrid<E>(
 //    override fun get2dList(): List<List<E>> = lines.map { it.toList() }.toList()
 //    override fun copy(): Grid<E> = FixedSizeGrid(get2dList())
 //}
+
+fun List<List<Int>>.getAdjacentPoints(point: Pair<Int, Int>): List<Pair<Int, Int>> {
+    val (x, y) = point
+
+    val n = takeIf { y in (1 ..Puzzle9.maxY) }?.let { x to (y-1) }
+    val e = takeIf { x in (0 until Puzzle9.maxX) }?.let { (x + 1) to y }
+    val s = takeIf { y in (0 until Puzzle9.maxY) }?.let { x to (y + 1) }
+    val w = takeIf { x in (1 ..Puzzle9.maxX) }?.let { (x - 1) to y }
+
+    return listOfNotNull(n, e, s, w)
+}

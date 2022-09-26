@@ -83,7 +83,6 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
     open fun part2(): Any? =
         "Not yet implemented"
 
-    @OptIn(ExperimentalTime::class)
     private fun runAndPrint(name: String, func: () -> Any?) = measureTimedValue { func() }.also {
         println("$name took: ${it.duration}")
         println("Answer: ${it.value}")
