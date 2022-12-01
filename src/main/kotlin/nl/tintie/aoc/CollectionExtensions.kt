@@ -35,10 +35,10 @@ fun <T> List<T>.countOccurrences() = groupBy { it }
     .map { it.toPair() }
 
 /**
- * Splits a list of type `T` into multiple sublists of type `T` based on `isDelimiter`.
+ * Splits a list of type [T] into multiple sublists of type [T] based on [isDelimiter].
  * The delimiter is not included in the result.
  */
-fun <T> List<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
+fun <T> Collection<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
     fold(listOf(listOf())) { acc, element ->
         if (isDelimiter(element)) {
             acc.plusElement(listOf())
@@ -46,5 +46,19 @@ fun <T> List<T>.splitCollection(isDelimiter: (T) -> Boolean): List<List<T>> =
             acc.dropLast(1).plusElement(acc.last() + element)
         }
     }
+
+/**
+ * Splits a [Collection] into multiple [List]s of type [T] returned as a [Sequence] based on [isDelimiter].
+ */
+fun <T> Collection<T>.splitToSequence(isDelimiter: (T) -> Boolean): Sequence<List<T>> = sequence {
+    fold(mutableListOf<T>()) { acc, e ->
+        if(isDelimiter(e)) {
+            yield(acc)
+            mutableListOf()
+        } else {
+            acc.apply { add(e) }
+        }
+    }
+}
 
 fun <T> List<T>.getRepeating(i: Int) = get((i + size) % size)

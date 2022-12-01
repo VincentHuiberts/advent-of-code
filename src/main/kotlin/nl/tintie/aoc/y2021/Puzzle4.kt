@@ -68,5 +68,5 @@ object Puzzle4 : AocPuzzle(2021, 4) {
 }
 
 fun main() {
-    Puzzle4.runPart2()
+    Puzzle4.runBoth()
 }
