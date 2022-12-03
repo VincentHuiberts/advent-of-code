@@ -3,35 +3,24 @@ package nl.tintie.aoc.y2022
 import nl.tintie.aoc.AocPuzzle
 
 object Puzzle3 : AocPuzzle(2022, 3) {
-//    override val input: List<String>
-//        get() = """vJrwpWtwJgWrhcsFMMfFFhFp
-//jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-//PmmdzqPrVvPwwTWBwg
-//wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-//ttgJtRGJQctTZtZT
-//CrZsJsPPZsGzwwsLwLmpwMDw""".lines()
+    private val allChars = (('a'..'z') + ('A'..'Z')).toCharArray()
 
-    fun getDuplicate(line: String): Char {
-        val (left, right) = line.chunked(line.length / 2)
-        val duplicate = left.toCharArray().intersect(right.toSet())
-        return duplicate.first()
+    private fun Char.getPriority(): Int = allChars.indexOf(this) + 1
+
+    private fun List<String>.getDuplicates(): Set<Char> = drop(1).fold(first().toSet()) { acc, curr ->
+        acc.intersect(curr.toSet())
     }
-
-    val allChars = (('a'..'z') + ('A'..'Z')).toCharArray()
-
-    fun getPriority(char: Char): Int = allChars.indexOf(char) + 1
 
     override fun part1(): Any? {
-        return input.map(::getDuplicate).sumOf(::getPriority)
-    }
-
-    fun getDuplicatePart2(line1: String, line2: String, line3: String): Char {
-        return line1.toCharArray().intersect(line2.toSet()).intersect(line3.toSet()).first()
+        return input.sumOf { line ->
+            val parts = line.chunked(line.length / 2)
+            parts.getDuplicates().single().getPriority()
+        }
     }
 
     override fun part2(): Any? {
-        return input.windowed(3, 3, false).sumOf { (line1, line2, line3) ->
-            getPriority(getDuplicatePart2(line1, line2, line3))
+        return input.windowed(3, 3, false).sumOf { lines ->
+            lines.getDuplicates().single().getPriority()
         }
     }
 }
