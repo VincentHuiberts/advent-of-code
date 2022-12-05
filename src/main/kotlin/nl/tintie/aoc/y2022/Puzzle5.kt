@@ -17,9 +17,9 @@ object Puzzle5 : AocPuzzle(2022, 5) {
 
     val inputInstructions = input.splitCollection { it.isEmpty() }[1]
 
-    fun processInstruction(state: MutableMap<Int, MutableList<Char>>, line: String) {
+    fun processInstruction(state: MutableMap<Int, MutableList<Char>>, line: String, reversed: Boolean) {
         val (amount, from, to) = line.split(" ").mapNotNull { it.toIntOrNull() }
-        val crates = state[from]!!.takeLast(amount).reversed()
+        val crates = state[from]!!.takeLast(amount).run { if(reversed) reversed() else this }
         state.set(from, state[from]!!.dropLast(amount).toMutableList())
         state[to]!!.addAll(crates)
     }
@@ -27,22 +27,15 @@ object Puzzle5 : AocPuzzle(2022, 5) {
     override fun part1(): Any? {
         val state = initialState
         inputInstructions.forEach{
-            processInstruction(state, it)
+            processInstruction(state, it, true)
         }
         return state.values.map { it.last() }.joinToString("")
-    }
-
-    fun processInstruction2(state: MutableMap<Int, MutableList<Char>>, line: String) {
-        val (amount, from, to) = line.split(" ").mapNotNull { it.toIntOrNull() }
-        val crates = state[from]!!.takeLast(amount)
-        state.set(from, state[from]!!.dropLast(amount).toMutableList())
-        state[to]!!.addAll(crates)
     }
 
     override fun part2(): Any? {
         val state = initialState
         inputInstructions.forEach{
-            processInstruction2(state, it)
+            processInstruction(state, it, false)
         }
         return state.values.map { it.last() }.joinToString("")
     }
