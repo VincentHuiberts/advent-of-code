@@ -3,6 +3,8 @@ package nl.tintie.aoc.y2022
 import nl.tintie.aoc.AocPuzzle
 
 object Puzzle7 : AocPuzzle(2022, 7) {
+//    override val testInputCodeBlockIndex = 1
+
     private data class PuzzleFile(val name: String, val size: Int)
     private class Folder(
         val name: String,

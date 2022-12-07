@@ -53,10 +53,11 @@ abstract class AocPuzzle(val year: Int, val day: Int) {
             ?: orElse().also { cache(name, it) }
     }
 
-    open val testInput: String? = null
+    open val testInputCodeBlockIndex: Int? = null
 
-    val input: List<String> by lazy {
-        testInput?.lines()
+    open val input: List<String> by lazy {
+        testInputCodeBlockIndex
+            ?.let(::getCodeBlock)
             ?: localInputFile.takeIf { it.exists() }?.readLines()
             ?: fetchInput()
     }
