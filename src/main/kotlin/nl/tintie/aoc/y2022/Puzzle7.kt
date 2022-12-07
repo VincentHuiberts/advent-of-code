@@ -3,74 +3,47 @@ package nl.tintie.aoc.y2022
 import nl.tintie.aoc.AocPuzzle
 
 object Puzzle7 : AocPuzzle(2022, 7) {
-//    override val input = """${'$'} cd /
-//${'$'} ls
-//dir a
-//14848514 b.txt
-//8504156 c.dat
-//dir d
-//${'$'} cd a
-//${'$'} ls
-//dir e
-//29116 f
-//2557 g
-//62596 h.lst
-//${'$'} cd e
-//${'$'} ls
-//584 i
-//${'$'} cd ..
-//${'$'} cd ..
-//${'$'} cd d
-//${'$'} ls
-//4060174 j
-//8033020 d.log
-//5626152 d.ext
-//7214296 k""".lines()
-
-    data class PuzzleFile(val name: String, val size: Int)
-    class Folder(
+    private data class PuzzleFile(val name: String, val size: Int)
+    private class Folder(
         val name: String,
         val parentFolder: Folder? = null,
-        var subFolders: List<Folder> = emptyList(),
-        var files: List<PuzzleFile> = emptyList()
+        val subFolders: MutableList<Folder> = mutableListOf(),
+        var files: MutableList<PuzzleFile> = mutableListOf()
     ) {
         val totalSize: Long by lazy { subFolders.sumOf { it.totalSize } + files.sumOf { it.size } }
 
         override fun toString(): String = "Folder $name, size $totalSize"
     }
 
-    fun processCommands(lines: List<String>): Folder {
+    private fun processCommands(lines: List<String>): Folder {
         val rootFolder = Folder("/")
         var currentFolder = rootFolder
         lines.forEach { line ->
             when {
+                line.startsWith("\$ cd /") -> Unit
+                line == "\$ ls" -> Unit
+
                 line.endsWith(" ..") -> {
                     currentFolder = currentFolder.parentFolder!!
-                }
-                line.startsWith("\$ cd /") -> {
-
                 }
                 line.startsWith("\$ cd ") -> {
                     val subDir = line.split(" ").last()
                     currentFolder = currentFolder.subFolders.find { it.name == subDir }!!
                 }
-                line == "\$ ls" -> {
-
+                line.startsWith("dir") -> {
+                    currentFolder.subFolders += Folder(name = line.split(" ")[1], parentFolder = currentFolder)
                 }
-                !line.startsWith("dir") -> {
+                else -> {
                     val (size, name) = line.split(" ")
                     val file = PuzzleFile(name, size.toInt())
-                    currentFolder.files = currentFolder.files + file
-                }
-                line.startsWith("dir") -> {
-                    currentFolder.subFolders = currentFolder.subFolders + Folder(name = line.split(" ")[1], parentFolder = currentFolder)
+                    currentFolder.files += file
                 }
             }
         }
         return rootFolder
     }
 
-    fun Folder.filter(pred: (Folder) -> Boolean): List<Folder> {
+    private fun Folder.filter(pred: (Folder) -> Boolean): List<Folder> {
         return subFolders.filter(pred) + subFolders.flatMap { it.filter(pred) }
     }
 
@@ -81,14 +54,13 @@ object Puzzle7 : AocPuzzle(2022, 7) {
 
     override fun part2(): Any? {
         val dirs = processCommands(input)
-        val requiredSpace = 30000000
-        val driveSize = 70000000
-        val unusedSpace = driveSize - dirs.totalSize
-        val leftToRemove = requiredSpace - unusedSpace
+        val requiredSpace = 30_000_000
+        val driveSize = 70_000_000
+        val leftToRemove = requiredSpace - (driveSize - dirs.totalSize)
         return dirs.filter { it.totalSize > leftToRemove }.minBy { it.totalSize }.totalSize
     }
 }
 
 fun main() {
-    Puzzle7.runPart2()
+    Puzzle7.runBoth()
 }
