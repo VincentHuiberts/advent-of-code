@@ -7,7 +7,7 @@ typealias NodeList = List<Node>
 typealias Grid = List<List<Node>>
 
 object Puzzle15 : AocPuzzle(2021, 15) {
-    override val input: List<String>
+    override val testInput: String
         get() = """1163751742
 1381373672
 2136511328
@@ -17,7 +17,7 @@ object Puzzle15 : AocPuzzle(2021, 15) {
 1359912421
 3125421639
 1293138521
-2311944581""".lines()
+2311944581"""
 
     val grid = input.map { line -> line.toList().map { c -> c.digitToInt() } }
 

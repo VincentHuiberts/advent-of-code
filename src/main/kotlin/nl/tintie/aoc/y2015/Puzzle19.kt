@@ -5,14 +5,14 @@ import nl.tintie.aoc.AocPuzzle
 object Puzzle19 : AocPuzzle(2015, 19) {
     data class Replacement(val input: String, val output: String)
 
-    override val input: List<String>
+    override val testInput
         get() = """e => H
 e => O
 H => HO
 H => OH
 O => HH
 
-HOH""".trimIndent().lines()
+HOH""".trimIndent()
 
     val replacements = input.takeWhile { it.isNotBlank() }.map {
         val (input, output) = it.split(" => ")

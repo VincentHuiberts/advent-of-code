@@ -27,7 +27,7 @@ object Puzzle19 : AocPuzzle(2020, 19) {
     val messages = sets[1]
     val maxMessagesSize = messages.maxOf { it.length }
 
-    override val input: List<String>
+    override val testInput
         get() = """42: 9 14 | 10 1
 9: 14 27 | 1 26
 10: 23 14 | 28 1
@@ -74,7 +74,7 @@ aaaaabbaabaaaaababaa
 aaaabbaaaabbaaa
 aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
 babaaabbbaaabaababbaabababaaab
-aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba""".lines()
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"""
 
     fun List<String>.multiply(options: List<String>): List<String> {
         return flatMap { initial -> options.map { new -> initial + new } }
