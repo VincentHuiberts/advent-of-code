@@ -6,9 +6,11 @@ import org.junit.jupiter.api.fail
 object Puzzle8 : AocPuzzle(2022, 8) {
 //    override val testInputCodeBlockIndex = 0
 
-    val grid = input.map { line -> line.map { it.digitToInt() } }
+    private enum class Direction { U, D, L, R }
 
-    fun countVisible(grid: List<List<Int>>): Int {
+    val grid = input.map { line -> line.map { it.digitToInt() }.toIntArray() }.toTypedArray()
+
+    private fun countVisible(grid: Array<IntArray>): Int {
         return grid.withIndex().sumOf { (y, line) ->
             line.withIndex().count { (x, _) ->
                 when {
@@ -21,34 +23,33 @@ object Puzzle8 : AocPuzzle(2022, 8) {
         }
     }
 
-    fun List<List<Int>>.hasShorter(x: Int, y: Int): Boolean = listOf("N", "E", "S", "W").any { dir ->
+    private fun Array<IntArray>.hasShorter(x: Int, y: Int): Boolean = Direction.values().any { dir ->
         hasShorter(x, y, dir)
     }
 
-    fun List<List<Int>>.hasShorter(x: Int, y: Int, direction: String): Boolean {
+    private fun Array<IntArray>.hasShorter(x: Int, y: Int, direction: Direction): Boolean {
         val treeSize = get(y)[x]
         return when (direction) {
-            "N" -> {
+            Direction.U -> {
                 (y downTo 0).drop(1).all { y2 ->
                     get(y2)[x] < treeSize
                 }
             }
-            "E" -> {
+            Direction.R -> {
                 (x..first().lastIndex).drop(1).all { x2 ->
                     get(y)[x2] < treeSize
                 }
             }
-            "S" -> {
+            Direction.D -> {
                 (y..lastIndex).drop(1).all { y2 ->
                     get(y2)[x] < treeSize
                 }
             }
-            "W" -> {
+            Direction.L -> {
                 (x downTo 0).drop(1).all { x2 ->
                     get(y)[x2] < treeSize
                 }
             }
-            else -> fail("wrong")
         }
     }
 
@@ -56,58 +57,57 @@ object Puzzle8 : AocPuzzle(2022, 8) {
         return countVisible(grid)
     }
 
-    fun List<List<Int>>.scenicScore(x: Int, y: Int): Int = listOf("N", "E", "S", "W").map { dir ->
+    fun Array<IntArray>.scenicScore(x: Int, y: Int): Int = Direction.values().map { dir ->
         countVisible(x, y, dir)
     }.reduce(Int::times)
 
-    fun List<List<Int>>.countVisible(x: Int, y: Int, direction: String): Int {
+    private fun Array<IntArray>.countVisible(x: Int, y: Int, direction: Direction): Int {
         val treeSize = get(y)[x]
         return when (direction) {
-            "N" -> {
+            Direction.U -> {
                 (y downTo 0).drop(1).takeWhile { y2 ->
                     get(y2)[x] < treeSize
                 }.let {
-                    if ((it.lastOrNull() ?:0) != 0) {
+                    if (it.lastOrNull()?.let { it != 0 } == true) {
                         it.size + 1
                     } else {
                         it.size
                     }
                 }
             }
-            "E" -> {
+            Direction.R -> {
                 (x..first().lastIndex).drop(1).takeWhile { x2 ->
                     get(y)[x2] < treeSize
                 }.let {
-                    if ((it.lastOrNull() ?: grid.first().lastIndex) != grid.first().lastIndex) {
+                    if (it.lastOrNull()?.let { it != grid.first().lastIndex } == true) {
                         it.size + 1
                     } else {
                         it.size
                     }
                 }
             }
-            "S" -> {
+            Direction.D -> {
                 (y..lastIndex).drop(1).takeWhile { y2 ->
                     get(y2)[x] < treeSize
                 }.let {
-                    if ((it.lastOrNull() ?: grid.lastIndex) != grid.lastIndex) {
+                    if (it.lastOrNull()?.let { it != grid.lastIndex } == true) {
                         it.size + 1
                     } else {
                         it.size
                     }
                 }
             }
-            "W" -> {
+            Direction.L -> {
                 (x downTo 0).drop(1).takeWhile { x2 ->
                     get(y)[x2] < treeSize
                 }.let {
-                    if ((it.lastOrNull() ?: 0) != 0) {
+                    if (it.lastOrNull()?.let { it != 0 } == true) {
                         it.size + 1
                     } else {
                         it.size
                     }
                 }
             }
-            else -> fail("wrong")
         }
     }
 
@@ -121,5 +121,5 @@ object Puzzle8 : AocPuzzle(2022, 8) {
 }
 
 fun main() {
-    Puzzle8.runPart2()
+    Puzzle8.runBoth()
 }
