@@ -1,7 +1,6 @@
 package nl.tintie.aoc.y2022
 
 import nl.tintie.aoc.AocPuzzle
-import org.junit.jupiter.api.fail
 
 object Puzzle8 : AocPuzzle(2022, 8) {
 //    override val testInputCodeBlockIndex = 0
