@@ -18,6 +18,7 @@ class PuzzleAnswers2022 {
             Puzzle7,
             Puzzle8,
             Puzzle9,
+            Puzzle10
         ).flatMap { puzzle ->
             listOf(
                 DynamicTest.dynamicTest("Puzzle year: ${puzzle.year}, day: ${puzzle.day}, part 1") {
