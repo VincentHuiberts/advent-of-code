@@ -39,14 +39,14 @@ object Puzzle10 : AocPuzzle(2022, 10) {
         input.fold(1) { x, instr ->
             val xRange = (x - 1)..(x + 1)
             if (instr == "noop") {
-                if (cycle.rem(40) in xRange) {
+                if (cycle.mod(40) in xRange) {
                     outputBuffer[cycle] = "#"
                 }
                 cycle++
                 x
             } else {
                 repeat(2) {
-                    if (cycle.rem(40) in xRange) {
+                    if (cycle.mod(40) in xRange) {
                         outputBuffer[cycle] = "#"
                     }
                     cycle++
